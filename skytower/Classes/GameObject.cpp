@@ -1,11 +1,10 @@
 #include "GameObject.h"
 
 
-GameObject::GameObject(GraphicComponent* graphic, PhysicComponent* physic, InputComponent* input, AbstractUpdate* update)
+GameObject::GameObject(GraphicComponent* graphic, PhysicComponent* physic, InputComponent* input)
   : graphic_(std::shared_ptr<GraphicComponent>(graphic)),
   physic_(std::shared_ptr<PhysicComponent>(physic)),
-  input_(std::shared_ptr<InputComponent>(input)),
-  customUpdate_(std::shared_ptr<AbstractUpdate>(update))
+  input_(std::shared_ptr<InputComponent>(input)) 
 {
 }
 
@@ -23,7 +22,6 @@ GameObject * GameObject::clone()
   GraphicComponent* graphic = nullptr;
   PhysicComponent*  physic = nullptr;
   InputComponent*   input = nullptr;
-  AbstractUpdate*   customUpdate = nullptr;
 
   if (input_) { 
     input = input_->clone();
@@ -37,12 +35,8 @@ GameObject * GameObject::clone()
     graphic = graphic_->clone();
   }
 
-  if (customUpdate_) {
-    customUpdate = customUpdate_->clone();
-  }
-
   //create clone of GameObject
-  auto object = new GameObject(graphic, physic, input, customUpdate);
+  auto object = new GameObject(graphic, physic, input);
 
   //clone some variables
   object->setTag(tag_);
@@ -66,9 +60,6 @@ void GameObject::update(float deltaTime)
     graphic_->update(this);
   }
 
-  if (customUpdate_) {
-    customUpdate_->update(this, deltaTime);
-  }
 }
 
 void GameObject::fixedUpdate(float deltaTime)

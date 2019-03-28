@@ -1,4 +1,5 @@
 #include "Globals.h"
+#include "Spawner.h"
 
 USING_NS_CC;
 
@@ -31,12 +32,23 @@ const std::string Globals::fileNameElementWindow        { "elements_window.png" 
 
 const std::string Globals::fileNameScreenTitle      { "menu_screen-title.png" };
 const std::string Globals::fileNameScreenHighScores { "menu_screen-high-scores.png" };
-const std::string Globals::fileNameHowToPlay        { "menu_screen-how-to-play.png" };
+const std::string Globals::fileNameScreenHowToPlay  { "menu_screen-how-to-play.png" };
 
 const std::string Globals::fileNameButtonHighScores { "menu_button-high-scores.png" };
 const std::string Globals::fileNameButtonHowToPlay  { "menu_button-how-to-play.png" };
 const std::string Globals::fileNameButtonPlay       { "menu_button-play.png" };
 
+
+Spawner<GameObject> Globals::spawner;
+
+
+Globals::Globals()
+{
+}
+
+Globals::~Globals()
+{
+}
 
 int Globals::random(int min, int max)
 {

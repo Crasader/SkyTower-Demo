@@ -149,19 +149,27 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)\Resources\" /D /E /I /F /Y
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\Classes\AppDelegate.cpp" />
+    <ClCompile Include="..\Classes\Components\GraphicComponent.cpp" />
+    <ClCompile Include="..\Classes\Components\InputComponent.cpp" />
+    <ClCompile Include="..\Classes\Components\PhysicComponent.cpp" />
+    <ClCompile Include="..\Classes\Components\PlayerInputComponent.cpp" />
     <ClCompile Include="..\Classes\GameObject.cpp" />
-    <ClCompile Include="..\Classes\GameOverScene.cpp" />
+    <ClCompile Include="..\Classes\InputState.cpp" />
+    <ClCompile Include="..\Classes\TitleScene.cpp" />
     <ClCompile Include="..\Classes\Globals.cpp" />
-    <ClCompile Include="..\Classes\HelloWorldScene.cpp" />
-    <ClCompile Include="..\Classes\Spawner.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Classes\AppDelegate.h" />
+    <ClInclude Include="..\Classes\Components\GraphicComponent.h" />
+    <ClInclude Include="..\Classes\Components\InputComponent.h" />
+    <ClInclude Include="..\Classes\Components\PhysicComponent.h" />
+    <ClInclude Include="..\Classes\Components\PlayerInputComponent.h" />
+    <ClInclude Include="..\Classes\Enums.h" />
     <ClInclude Include="..\Classes\GameObject.h" />
-    <ClInclude Include="..\Classes\GameOverScene.h" />
+    <ClInclude Include="..\Classes\InputState.h" />
+    <ClInclude Include="..\Classes\TitleScene.h" />
     <ClInclude Include="..\Classes\Globals.h" />
-    <ClInclude Include="..\Classes\HelloWorldScene.h" />
     <ClInclude Include="..\Classes\Spawner.h" />
     <ClInclude Include="main.h" />
   </ItemGroup>

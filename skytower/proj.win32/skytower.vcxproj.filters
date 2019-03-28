@@ -10,6 +10,9 @@
     <Filter Include="src">
       <UniqueIdentifier>{bb6c862e-70e9-49d9-81b7-3829a6f50471}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\Components">
+      <UniqueIdentifier>{fae0565d-0521-4a1e-b4b3-f2d20fa7e6bb}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -18,19 +21,28 @@
     <ClCompile Include="..\Classes\AppDelegate.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\HelloWorldScene.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
     <ClCompile Include="..\Classes\GameObject.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\GameOverScene.cpp">
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\Globals.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\Spawner.cpp">
+    <ClCompile Include="..\Classes\TitleScene.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Components\GraphicComponent.cpp">
+      <Filter>src\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Components\InputComponent.cpp">
+      <Filter>src\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Components\PhysicComponent.cpp">
+      <Filter>src\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Components\PlayerInputComponent.cpp">
+      <Filter>src\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\InputState.cpp">
       <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>
@@ -41,19 +53,34 @@
     <ClInclude Include="..\Classes\AppDelegate.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\HelloWorldScene.h">
-      <Filter>src</Filter>
-    </ClInclude>
     <ClInclude Include="..\Classes\GameObject.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\GameOverScene.h">
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\Globals.h">
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\Spawner.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\TitleScene.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Components\GraphicComponent.h">
+      <Filter>src\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Components\InputComponent.h">
+      <Filter>src\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Components\PhysicComponent.h">
+      <Filter>src\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Components\PlayerInputComponent.h">
+      <Filter>src\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\InputState.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Enums.h">
       <Filter>src</Filter>
     </ClInclude>
   </ItemGroup>

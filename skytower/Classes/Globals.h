@@ -3,6 +3,9 @@
 #include "cocos2d.h"
 #include <string>
 #include <stdlib.h>
+#include "GameObject.h"
+
+template<typename T> class Spawner;
 
 class Globals
 {
@@ -40,7 +43,7 @@ public:
 
   const static std::string fileNameScreenTitle;
   const static std::string fileNameScreenHighScores;
-  const static std::string fileNameHowToPlay;
+  const static std::string fileNameScreenHowToPlay;
 
   const static std::string fileNameButtonHighScores;
   const static std::string fileNameButtonHowToPlay;
@@ -49,22 +52,9 @@ public:
   const static std::string fileNameButtonPause;
 
 
+  static Spawner<GameObject> spawner;
+  
 
-
-
-
-  enum {
-    BACKGROUND = -1,
-    MIDDLEGROUND = 0,
-    FOREGROUND = 1
-  };
-
-  enum {
-    NONE,
-    CANNONBALL,
-    TARGET,
-    CANNON
-  };
 
 };
 

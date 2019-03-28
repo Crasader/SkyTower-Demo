@@ -1,6 +1,9 @@
 #pragma once
 
+#include <memory>
 #include "cocos2d.h"
+#include "GameObject.h"
+
 
 class TitleScene : public cocos2d::Layer
 {
@@ -14,4 +17,5 @@ public:
 private:
   cocos2d::Size    screenSize_;
 
+  std::unique_ptr<GameObject>  title_;
 };

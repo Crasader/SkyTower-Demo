@@ -1,7 +1,8 @@
 
 #include "TitleScene.h"
 #include "Globals.h"
-//#include "GameLayer.h"
+#include "Enums.h"
+#include "Spawner.h"
 
 USING_NS_CC;
 
@@ -23,6 +24,12 @@ bool TitleScene::init()
  }
 
   auto size = Director::getInstance()->getWinSize();
+
+
+  //Spawn Background
+  title_ = std::unique_ptr<GameObject>(Globals::spawner.spawn("title"));
+  
+  title_->getGraphic()->setParentNode(this, BACKGROUND);
 
   //Director::getInstance()->getOpenGLView()->setCursorVisible(true);
 

@@ -3,12 +3,11 @@
 #include <string>
 #include <memory>
 #include "cocos2d.h"
-#include "Globals.h"
 #include "Components\PhysicComponent.h"
 #include "Components\GraphicComponent.h"
 #include "Components\InputComponent.h"
 #include "Components\PlayerInputComponent.h"
-#include "Strategy\AbstractUpdate.h"
+#include "Enums.h"
 
 
 class GameObject
@@ -16,8 +15,7 @@ class GameObject
 public:
   GameObject( GraphicComponent* graphic = nullptr, 
               PhysicComponent*  physic = nullptr, 
-              InputComponent*   input = nullptr,
-              AbstractUpdate*   update = nullptr );
+              InputComponent*   input = nullptr);
 
   virtual ~GameObject();
 
@@ -43,11 +41,10 @@ protected:
   std::shared_ptr  <InputComponent> input_;
   std::shared_ptr <PhysicComponent> physic_;
   std::shared_ptr<GraphicComponent> graphic_;
-  std::shared_ptr<AbstractUpdate>   customUpdate_;
 
   std::shared_ptr<GameObject>       child_;
 
-  int tag_{ Globals::NONE };
+  int tag_{ NONE };
 
 };
 
