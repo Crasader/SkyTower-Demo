@@ -1,8 +1,12 @@
 
 #include "TitleScene.h"
+#include "GameScene.h"
+#include "HighScoresScene.h"
+#include "HowToPlayScene.h"
 #include "Globals.h"
 #include "Enums.h"
 #include "Spawner.h"
+#include <memory>
 
 USING_NS_CC;
 
@@ -31,41 +35,42 @@ bool TitleScene::init()
   
   title_->getGraphic()->setParentNode(this, BACKGROUND);
 
-  //Director::getInstance()->getOpenGLView()->setCursorVisible(true);
 
-  ////Add labels
-  //std::string title;
-  //bool win = (targetsDestroyed == targetsTotal);
-  //if (win) {
-  //  title = "Congratulations!";
-  //}
-  //else {
-  //  title = "Game Over";
-  //}
+  auto buttonPlay = Sprite::createWithSpriteFrameName(Globals::fileNameButtonPlay);
+  auto buttonPlaySelected = Sprite::createWithSpriteFrameName(Globals::fileNameButtonPlay);
+  buttonPlaySelected->setColor(Color3B::GRAY);
 
-  //std::string totals = "Destroyed " + std::to_string(targetsDestroyed) + " targets of " + std::to_string(targetsTotal);
+  auto buttonHighScores = Sprite::createWithSpriteFrameName(Globals::fileNameButtonHighScores);
+  auto buttonHighScoresSelected = Sprite::createWithSpriteFrameName(Globals::fileNameButtonHighScores);
+  buttonHighScoresSelected->setColor(Color3B::GRAY);
 
-  //auto labelTitle = Label::createWithTTF(title, "fonts/Marker Felt.ttf", 100);
-
-  //labelTitle->setPosition(Vec2(size.width / 2, (size.height / 5) * 4));
-  //this->addChild(labelTitle);
-
-  //auto labelDestroyed = Label::createWithTTF(totals, "fonts/Marker Felt.ttf", 50);
-
-  //labelDestroyed->setPosition(Vec2(size.width / 2, (size.height / 5) *3));
-  //this->addChild(labelDestroyed);
+  auto buttonHowToPlay = Sprite::createWithSpriteFrameName(Globals::fileNameButtonHowToPlay);
+  auto buttonHowToPlaySelected = Sprite::createWithSpriteFrameName(Globals::fileNameButtonHowToPlay);
+  buttonHowToPlaySelected->setColor(Color3B::GRAY);
 
 
+  auto itemPlay = MenuItemSprite::create(buttonPlay, buttonPlaySelected, [](Ref* sender) {
+    auto scene = GameScene::createScene();
+    auto transition = TransitionFade::create(0.5f, scene);
+    Director::getInstance()->replaceScene(transition);
+  });
 
-  //auto itemReplay = MenuItemFont::create("Replay", [](Ref* sender) {
-  //  auto scene = GameLayer::createScene();
-  //  Director::getInstance()->replaceScene(scene);
-  //});
+  auto itemHighScores = MenuItemSprite::create(buttonHighScores, buttonHighScoresSelected, [](Ref* sender) {
+    auto scene = HighScoresScene::createScene();
+    auto transition = TransitionFade::create(0.5f, scene);
+    Director::getInstance()->replaceScene(transition);
+  });
 
-  //auto menu = Menu::create(itemReplay, nullptr);
-  ////menu->alignItemsVertically();
-  //menu->setPosition(Vec2(size.width / 2, (size.height / 5) * 1.5f));
-  //this->addChild(menu);
+  auto itemHowToPlay = MenuItemSprite::create(buttonHowToPlay, buttonHowToPlaySelected, [](Ref* sender) {
+    auto scene = HowToPlayScene::createScene();
+    auto transition = TransitionFade::create(0.5f, scene);
+    Director::getInstance()->replaceScene(transition);
+  });
+
+  auto menu = Menu::create(itemPlay, itemHighScores, itemHowToPlay, nullptr);
+  menu->alignItemsVertically();
+  menu->setPosition( Vec2(size.width / 2, size.height / 3) );
+  this->addChild(menu);
 
   return true;
 }

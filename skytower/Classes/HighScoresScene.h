@@ -5,12 +5,12 @@
 #include "GameObject.h"
 
 
-class TitleScene : public cocos2d::Layer
+class HighScoresScene : public cocos2d::Layer
 {
 public:
   static cocos2d::Scene* createScene();
   virtual bool init();
-  CREATE_FUNC(TitleScene);
+  CREATE_FUNC(HighScoresScene);
 
 
 
@@ -18,6 +18,5 @@ private:
   cocos2d::Size    screenSize_;
 
   std::unique_ptr<GameObject>  title_;
-
 
 };

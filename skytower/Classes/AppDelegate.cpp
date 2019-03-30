@@ -21,10 +21,11 @@ using namespace CocosDenshion;
 
 USING_NS_CC;
 
-static cocos2d::Size designResolutionSize = cocos2d::Size(320, 480);
-static cocos2d::Size smallResolutionSize = cocos2d::Size(320, 480);
-static cocos2d::Size mediumResolutionSize = cocos2d::Size(768, 1024);
-static cocos2d::Size largeResolutionSize = cocos2d::Size(1536, 2048);
+
+//static cocos2d::Size designResolutionSize = cocos2d::Size(320, 480);
+//static cocos2d::Size smallResolutionSize = cocos2d::Size(320, 480);
+//static cocos2d::Size mediumResolutionSize = cocos2d::Size(768, 1024);
+//static cocos2d::Size largeResolutionSize = cocos2d::Size(1536, 2048);
 
 AppDelegate::AppDelegate()
 {
@@ -62,7 +63,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
     auto glview = director->getOpenGLView();
     if(!glview) {
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC) || (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
-        glview = GLViewImpl::createWithRect("skytower", cocos2d::Rect(0, 0, designResolutionSize.width, designResolutionSize.height));
+        glview = GLViewImpl::createWithRect("skytower", cocos2d::Rect(0, 0, Globals::designResoluton.width, Globals::designResoluton.height));
 #else
         glview = GLViewImpl::create("skytower");
 #endif
@@ -75,6 +76,8 @@ bool AppDelegate::applicationDidFinishLaunching() {
     // set FPS. the default value is 1.0/60 if you don't call this
     director->setAnimationInterval(1.0f / 60);
 
+    director->setContentScaleFactor(0.5f);
+/*
     // Set the design resolution
     glview->setDesignResolutionSize(designResolutionSize.width, designResolutionSize.height, ResolutionPolicy::NO_BORDER);
     auto frameSize = glview->getFrameSize();
@@ -93,6 +96,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
     {        
         director->setContentScaleFactor(MIN(smallResolutionSize.height/designResolutionSize.height, smallResolutionSize.width/designResolutionSize.width));
     }
+    */
 
     register_all_packages();
 
@@ -142,9 +146,42 @@ void AppDelegate::initGlobalSprites()
   InputComponent*   input;
   GameObject*       gameObject;
 
-  //Add background
+  //Add title screens
   graphic = new GraphicComponent(Globals::fileNameScreenTitle);
   graphic->setAnchorPoint(Vec2::ZERO);
   gameObject = new GameObject(graphic);
   Globals::spawner.addPrototype(gameObject, "title");
+
+  graphic = new GraphicComponent(Globals::fileNameScreenHowToPlay);
+  graphic->setAnchorPoint(Vec2::ZERO);
+  gameObject = new GameObject(graphic);
+  Globals::spawner.addPrototype(gameObject, "howtoplay");
+
+  graphic = new GraphicComponent(Globals::fileNameScreenHighScores);
+  graphic->setAnchorPoint(Vec2::ZERO);
+  gameObject = new GameObject(graphic);
+  Globals::spawner.addPrototype(gameObject, "highscores");
+
+  graphic = new GraphicComponent(Globals::fileNameBackSky);
+  graphic->setAnchorPoint(Vec2::ZERO);
+  gameObject = new GameObject(graphic);
+  Globals::spawner.addPrototype(gameObject, "backsky");
+
+
+  //Add backgrounds
+  graphic = new GraphicComponent(Globals::fileNameBackSky);
+  graphic->setAnchorPoint(Vec2::ZERO);
+  gameObject = new GameObject(graphic);
+  Globals::spawner.addPrototype(gameObject, "backsky");
+
+  graphic = new GraphicComponent(Globals::fileNameBackEarth);
+  graphic->setAnchorPoint(Vec2::ZERO);
+  gameObject = new GameObject(graphic);
+  Globals::spawner.addPrototype(gameObject, "backearth");
+
+  //Add buttons
+
+
+  //Add game elements
+
 }

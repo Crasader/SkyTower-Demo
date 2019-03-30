@@ -4,7 +4,7 @@
 USING_NS_CC;
 
 
-const Size Globals::designResoluton = Size(1024, 768);
+const Size Globals::designResoluton = Size(640, 960);
 const int Globals::framesPerSecond = 60;
 const int Globals::framesPerSecondFixedUpdate = 30;
 
