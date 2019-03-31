@@ -14,6 +14,7 @@ public:
   virtual void fixedUpdate(float deltaTime) override;
 
   void addElement( std::shared_ptr<GameObject> gameObject );
+  std::shared_ptr<GameObject> getTopElement();
   
 private:
   virtual GameObject* clone() override;

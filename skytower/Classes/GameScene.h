@@ -28,6 +28,6 @@ private:
   std::list<std::shared_ptr<GameObject>> objectsPool_;
 
   //fixed update variables
-  float fixedTimeCounter{ 0 };
+  float fixedTimeCounter{ 0.0f };
 
 };

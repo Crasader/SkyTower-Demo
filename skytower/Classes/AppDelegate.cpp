@@ -186,6 +186,7 @@ void AppDelegate::initGlobalSprites()
   colliderRect = Rect( 0, 0, graphic->getNode()->getContentSize().width, 95.0f );
   collider = new BoxCollider(colliderRect, graphic->getNode());
   gameObject = new GameObject(graphic, physic, collider);
+  gameObject->setTag(ELEMENT);
   Globals::spawner.addPrototype(gameObject, "element-window");
 
   gameObject = Globals::spawner.spawn("element-window"); //using "element-window" as prototype
@@ -209,6 +210,7 @@ void AppDelegate::initGlobalSprites()
   collider = new BoxCollider(colliderRect, graphic->getNode());
   graphic->setAnchorPoint(Vec2(0.5f, 0.0f));
   gameObject = new GameObject(graphic, nullptr, collider);
+  gameObject->setTag(ELEMENT);
   Globals::spawner.addPrototype(gameObject, "element-grass");
 
 }

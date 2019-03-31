@@ -31,6 +31,11 @@ void Building::addElement( std::shared_ptr<GameObject> gameObject )
   elements_.push_back(gameObject);
 }
 
+std::shared_ptr<GameObject> Building::getTopElement()
+{
+  return elements_.back();
+}
+
 GameObject * Building::clone()
 {
   return nullptr;

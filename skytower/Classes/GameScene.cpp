@@ -43,18 +43,19 @@ bool GameScene::init()
   //Create building base
   auto initialPosition(Vec2(screenSize_.width / 2, 100));
   building_ = std::make_unique<Building>(initialPosition);
+  building_->setTag(BUILDING);
   //Add stand with grass to building
   gameObject = Globals::spawner.spawn("element-grass");
   gameObject->setPosition(Vec2(screenSize_.width / 2, 0));
   gameLayer_->addChild( gameObject->getCocosNode() );
   building_->addElement( std::shared_ptr<GameObject>(gameObject) );
-  objectsPool_.push_back(building_);
+  //objectsPool_.push_back(building_);
 
 
   gameObject = Globals::spawner.spawn("element-balcon-Blue");
   gameObject->setPosition( Vec2(screenSize_.width / 2, screenSize_.height) );
-  gameObject->setRotation(40.0f);
-  gameLayer_->addChild( gameObject->getGraphic()->getNode() );
+  //gameObject->setRotation(40.0f);
+  gameLayer_->addChild( gameObject->getCocosNode() );
   objectsPool_.push_back(std::shared_ptr<GameObject>(gameObject));
 
   
@@ -98,8 +99,15 @@ void GameScene::update(float deltaTime)
 
 void GameScene::fixedUpdate(float deltaTime)
 {
+  std::shared_ptr<GameObject> topElement = building_->getTopElement();
+
   for (auto object : objectsPool_) {
     object->fixedUpdate(deltaTime);
+
+    bool intesectBuildingAndElement = topElement->getCollider()->intersectsCollider(object->getCollider());
+    if (intesectBuildingAndElement) {
+      cocos2d::log("Intersect!");
+    }
   }
 
 }

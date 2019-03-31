@@ -23,7 +23,7 @@ void PhysicComponent::update(GameObject* gameObject, float deltaTime)
   auto graphic = gameObject->getGraphic();
   if (graphic) {
     auto position = graphic->getPosition();
-    position += velocity_ * deltaTime;
+    position += (velocity_ * deltaTime);
     graphic->setPosition(position);
   }
 }

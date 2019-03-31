@@ -55,8 +55,6 @@ public:
 
 
   static Spawner<GameObject> spawner;
-  
-
 
 };
 

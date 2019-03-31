@@ -6,9 +6,10 @@ enum {
   FOREGROUND = 1
 };
 
+
 enum {
   NONE,
-  CANNONBALL,
-  TARGET,
-  CANNON
+  ELEMENT,
+  BUILDING,
+  FLYINGTHING
 };

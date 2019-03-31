@@ -58,7 +58,6 @@ void GameObject::update(float deltaTime)
     input_->update(this);
   }
 
-
   if (physic_) {
     physic_->update(this, deltaTime);
   }
