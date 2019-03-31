@@ -9,6 +9,13 @@ GraphicComponent::GraphicComponent()
   node_->retain();
 }
 
+GraphicComponent::GraphicComponent(cocos2d::Node * node)
+{
+  //with existing node;
+  node_ = node;
+  node_->retain();
+}
+
 GraphicComponent::GraphicComponent(const std::string& fileName)
    : fileName_(fileName)
 {

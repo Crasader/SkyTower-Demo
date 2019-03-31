@@ -7,6 +7,7 @@ class GraphicComponent
 {
 public:
   GraphicComponent();
+  GraphicComponent(cocos2d::Node* node);
   GraphicComponent(const std::string& fileName);
   virtual ~GraphicComponent();
 

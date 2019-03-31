@@ -16,11 +16,12 @@ public:
   static int random(int min, int max);
 
 public:
+  static bool DebugDrawColliders = true;
   const static cocos2d::Size designResoluton;
   const static int framesPerSecond;
   const static int framesPerSecondFixedUpdate;
 
-  const static float Gravity;
+  const static cocos2d::Vec2 Gravity;
 
   const static std::string fileNameSpriteSheet;
 

@@ -6,6 +6,11 @@ PhysicComponent::PhysicComponent()
 {
 }
 
+PhysicComponent::PhysicComponent(cocos2d::Vec2 gravity) 
+  : gravity_(gravity)
+{
+}
+
 
 PhysicComponent::~PhysicComponent()
 {

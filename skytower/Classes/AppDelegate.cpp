@@ -4,6 +4,7 @@
 #include "Spawner.h"
 #include "Enums.h"
 
+
 // #define USE_AUDIO_ENGINE 1
 // #define USE_SIMPLE_AUDIO_ENGINE 1
 
@@ -143,10 +144,11 @@ void AppDelegate::initGlobalSprites()
 
   GraphicComponent* graphic;
   PhysicComponent*  physic;
+  ColliderComponent*      collider;
   InputComponent*   input;
   GameObject*       gameObject;
 
-  //Add title screens
+  //Add title screens to spawner
   graphic = new GraphicComponent(Globals::fileNameScreenTitle);
   graphic->setAnchorPoint(Vec2::ZERO);
   gameObject = new GameObject(graphic);
@@ -162,13 +164,8 @@ void AppDelegate::initGlobalSprites()
   gameObject = new GameObject(graphic);
   Globals::spawner.addPrototype(gameObject, "highscores");
 
-  graphic = new GraphicComponent(Globals::fileNameBackSky);
-  graphic->setAnchorPoint(Vec2::ZERO);
-  gameObject = new GameObject(graphic);
-  Globals::spawner.addPrototype(gameObject, "backsky");
 
-
-  //Add backgrounds
+  //Add backgrounds to spawner
   graphic = new GraphicComponent(Globals::fileNameBackSky);
   graphic->setAnchorPoint(Vec2::ZERO);
   gameObject = new GameObject(graphic);
@@ -179,9 +176,37 @@ void AppDelegate::initGlobalSprites()
   gameObject = new GameObject(graphic);
   Globals::spawner.addPrototype(gameObject, "backearth");
 
-  //Add buttons
 
+  //Add game elements to spawner
+  graphic = new GraphicComponent(Globals::fileNameElementWindow);
+  physic = new PhysicComponent(Globals::Gravity);
+  //collider = new BoxCollider();
+  graphic->setAnchorPoint(Vec2(0.5f, 0.0f));
+  //collider->setRectangle(Rect(graphic->getNode()->getBoundingBox()));
+  gameObject = new GameObject(graphic, physic/*, collider/**/);
+  Globals::spawner.addPrototype(gameObject, "element-window");
 
-  //Add game elements
+  gameObject = Globals::spawner.spawn("element-window"); //using "element-window" as prototype
+  graphic = new GraphicComponent(Globals::fileNameElementBalconBlue);
+  gameObject->setGraphic(graphic);
+  Globals::spawner.addPrototype(gameObject, "element-balcon-Blue");
+
+  gameObject = Globals::spawner.spawn("element-window"); //using "element-window" as prototype
+  graphic = new GraphicComponent(Globals::fileNameElementBalconGreen);
+  gameObject->setGraphic(graphic);
+  Globals::spawner.addPrototype(gameObject, "element-balcon-green");
+
+  gameObject = Globals::spawner.spawn("element-window"); //using "element-window" as prototype
+  graphic = new GraphicComponent(Globals::fileNameElementBalconOrange);
+  gameObject->setGraphic(graphic);
+  Globals::spawner.addPrototype(gameObject, "element-balcon-orange");
+
+  ////
+  graphic = new GraphicComponent(Globals::fileNameElementStandGrass);
+ // collider = new BoxCollider();
+  //collider->setRectangle(Rect(graphic->getNode()->getBoundingBox()));
+  graphic->setAnchorPoint(Vec2(0.5f, 0.0f));
+  gameObject = new GameObject(graphic, nullptr/*, collider*/);
+  Globals::spawner.addPrototype(gameObject, "element-grass");
 
 }

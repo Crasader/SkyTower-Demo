@@ -8,6 +8,7 @@ class PhysicComponent
 {
 public:
   PhysicComponent();
+  PhysicComponent(cocos2d::Vec2 gravity);
   virtual ~PhysicComponent();
 
   virtual void update(GameObject* gameObject, float deltaTime);

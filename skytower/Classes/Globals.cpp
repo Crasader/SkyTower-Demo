@@ -3,12 +3,13 @@
 
 USING_NS_CC;
 
+bool DebugDrawColliders{ true };
 
 const Size Globals::designResoluton = Size(640, 960);
 const int Globals::framesPerSecond = 60;
 const int Globals::framesPerSecondFixedUpdate = 30;
 
-const float Globals::Gravity = -2.5f;
+const cocos2d::Vec2 Globals::Gravity = cocos2d::Vec2(0, -9.0f);
 
 
 const std::string Globals::fileNameSpriteSheet  { "sprites.plist" };
@@ -21,7 +22,7 @@ const std::string Globals::fileNameBackSun    { "back_sun.png" };
 const std::string Globals::fileNameElementStandGrass    { "elements_grass.png" };
 const std::string Globals::fileNameElementBalconBlue    { "elements_balcon-blue.png" };
 const std::string Globals::fileNameElementBalconGreen   { "elements_balcon-green.png" };
-const std::string Globals::fileNameElementBalconOrange  { "elements_balcon-orange.png" };
+const std::string Globals::fileNameElementBalconOrange  { "elements_balcon-oragne.png" };
 const std::string Globals::fileNameElementDoorBlue      { "elements_door-balcon.png" };
 const std::string Globals::fileNameElementDoorGreen     { "elements_door-green.png" };
 const std::string Globals::fileNameElementDoorOrange    { "elements_door-orange.png" };

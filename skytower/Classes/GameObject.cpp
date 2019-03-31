@@ -1,9 +1,10 @@
 #include "GameObject.h"
 
 
-GameObject::GameObject(GraphicComponent* graphic, PhysicComponent* physic, InputComponent* input)
+GameObject::GameObject(GraphicComponent* graphic, PhysicComponent* physic, ColliderComponent* collider, InputComponent* input)
   : graphic_(std::shared_ptr<GraphicComponent>(graphic)),
   physic_(std::shared_ptr<PhysicComponent>(physic)),
+  collider_(std::shared_ptr<ColliderComponent>(collider)),
   input_(std::shared_ptr<InputComponent>(input)) 
 {
 }
@@ -19,9 +20,10 @@ GameObject::~GameObject()
 
 GameObject * GameObject::clone()
 {
-  GraphicComponent* graphic = nullptr;
-  PhysicComponent*  physic = nullptr;
-  InputComponent*   input = nullptr;
+  GraphicComponent*  graphic = nullptr;
+  PhysicComponent*   physic = nullptr;
+  InputComponent*    input = nullptr;
+  ColliderComponent* collider = nullptr;
 
   if (input_) { 
     input = input_->clone();
@@ -35,8 +37,12 @@ GameObject * GameObject::clone()
     graphic = graphic_->clone();
   }
 
+  if (collider_) {
+    collider = collider_->clone();
+  }
+
   //create clone of GameObject
-  auto object = new GameObject(graphic, physic, input);
+  auto object = new GameObject(graphic, physic, collider, input);
 
   //clone some variables
   object->setTag(tag_);
@@ -102,6 +108,32 @@ std::shared_ptr<GraphicComponent> GameObject::getGraphic()
 {
   return graphic_;
 }
+
+std::shared_ptr<ColliderComponent> GameObject::getCollider()
+{
+  return collider_;
+}
+
+void GameObject::setInput(InputComponent* input)
+{
+  input_ = std::shared_ptr<InputComponent>(input);
+}
+
+void GameObject::setPhysic(PhysicComponent* physic)
+{
+  physic_ = std::shared_ptr<PhysicComponent>(physic);
+}
+
+void GameObject::setGraphic(GraphicComponent* graphic)
+{
+  graphic_ = std::shared_ptr<GraphicComponent>(graphic);
+}
+
+void GameObject::setCollider(ColliderComponent* collider)
+{
+  collider_ = std::shared_ptr<ColliderComponent>(collider);
+}
+
 
 std::shared_ptr<GameObject> GameObject::getChild()
 {
