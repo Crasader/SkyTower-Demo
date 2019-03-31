@@ -3,6 +3,7 @@
 #include "TitleScene.h"
 #include "Spawner.h"
 #include "Enums.h"
+#include "Components\BoxCollider.h"
 
 
 // #define USE_AUDIO_ENGINE 1
@@ -142,11 +143,12 @@ void AppDelegate::initGlobalSprites()
   auto spriteCache = SpriteFrameCache::getInstance();
   spriteCache->addSpriteFramesWithFile(Globals::fileNameSpriteSheet);
 
-  GraphicComponent* graphic;
-  PhysicComponent*  physic;
-  ColliderComponent*      collider;
-  InputComponent*   input;
-  GameObject*       gameObject;
+  GraphicComponent*  graphic;
+  PhysicComponent*   physic;
+  ColliderComponent* collider;
+  InputComponent*    input;
+  GameObject*        gameObject;
+  cocos2d::Rect      colliderRect;
 
   //Add title screens to spawner
   graphic = new GraphicComponent(Globals::fileNameScreenTitle);
@@ -178,12 +180,12 @@ void AppDelegate::initGlobalSprites()
 
 
   //Add game elements to spawner
-  graphic = new GraphicComponent(Globals::fileNameElementWindow);
   physic = new PhysicComponent(Globals::Gravity);
-  //collider = new BoxCollider();
+  graphic = new GraphicComponent(Globals::fileNameElementWindow);
   graphic->setAnchorPoint(Vec2(0.5f, 0.0f));
-  //collider->setRectangle(Rect(graphic->getNode()->getBoundingBox()));
-  gameObject = new GameObject(graphic, physic/*, collider/**/);
+  colliderRect = Rect( 0, 0, graphic->getNode()->getContentSize().width, 95.0f );
+  collider = new BoxCollider(colliderRect, graphic->getNode());
+  gameObject = new GameObject(graphic, physic, collider);
   Globals::spawner.addPrototype(gameObject, "element-window");
 
   gameObject = Globals::spawner.spawn("element-window"); //using "element-window" as prototype
@@ -203,10 +205,10 @@ void AppDelegate::initGlobalSprites()
 
   ////
   graphic = new GraphicComponent(Globals::fileNameElementStandGrass);
- // collider = new BoxCollider();
-  //collider->setRectangle(Rect(graphic->getNode()->getBoundingBox()));
+  colliderRect = Rect(0, 0, graphic->getNode()->getContentSize().width, 50.0f);
+  collider = new BoxCollider(colliderRect, graphic->getNode());
   graphic->setAnchorPoint(Vec2(0.5f, 0.0f));
-  gameObject = new GameObject(graphic, nullptr/*, collider*/);
+  gameObject = new GameObject(graphic, nullptr, collider);
   Globals::spawner.addPrototype(gameObject, "element-grass");
 
 }

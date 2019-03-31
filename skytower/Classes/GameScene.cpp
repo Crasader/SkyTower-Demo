@@ -32,13 +32,6 @@ bool GameScene::init()
   gameLayer_ = Node::create();
   this->addChild(gameLayer_);
 
-  auto initialPosition(Vec2(screenSize_.width / 2, 200));
-  building_ = std::make_unique<Building>(initialPosition);
-
-  gameObject = Globals::spawner.spawn("element-grass");
-  gameLayer_->addChild( gameObject->getCocosNode() );
-  building_->addElement( std::shared_ptr<GameObject>(gameObject) );
-
 
   //Spawn Background
   backgroundSky_ = std::unique_ptr<GameObject>(Globals::spawner.spawn("backsky"));
@@ -47,6 +40,15 @@ bool GameScene::init()
   backgroundEarth_ = std::unique_ptr<GameObject>(Globals::spawner.spawn("backearth"));
   backgroundEarth_->getGraphic()->setParentNode(gameLayer_, BACKGROUND);
 
+  //Create building base
+  auto initialPosition(Vec2(screenSize_.width / 2, 100));
+  building_ = std::make_unique<Building>(initialPosition);
+  //Add stand with grass to building
+  gameObject = Globals::spawner.spawn("element-grass");
+  gameObject->setPosition(Vec2(screenSize_.width / 2, 0));
+  gameLayer_->addChild( gameObject->getCocosNode() );
+  building_->addElement( std::shared_ptr<GameObject>(gameObject) );
+  objectsPool_.push_back(building_);
 
 
   gameObject = Globals::spawner.spawn("element-balcon-Blue");
@@ -56,12 +58,12 @@ bool GameScene::init()
   objectsPool_.push_back(std::shared_ptr<GameObject>(gameObject));
 
   
-  auto draw = DrawNode::create();
+  //auto draw = DrawNode::create();
 
-  draw->drawSolidRect(Vec2(0, 0), Vec2(gameObject->getCocosNode()->getContentSize().width, 50.0f), Color4F::RED);
-  draw->setOpacity(40);
-  gameLayer_->addChild(draw);
-  gameObject->getCocosNode()->addChild(draw);
+  //draw->drawSolidRect(Vec2(0, 0), Vec2(gameObject->getCocosNode()->getContentSize().width, 50.0f), Color4F::RED);
+  //draw->setOpacity(40);
+  //gameLayer_->addChild(draw);
+  //gameObject->getCocosNode()->addChild(draw);
 
   this->scheduleUpdate();
   return true;

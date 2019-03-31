@@ -3,7 +3,7 @@
 
 USING_NS_CC;
 
-bool DebugDrawColliders{ true };
+const bool Globals::DebugDrawColliders{ true };
 
 const Size Globals::designResoluton = Size(640, 960);
 const int Globals::framesPerSecond = 60;

@@ -1,51 +1,66 @@
 #include "BoxCollider.h"
 
 
-BoxCollider::BoxCollider(cocos2d::Rect boxCollider, cocos2d::Node parent)
-  :boxCollider_(boxCollider)
+BoxCollider::BoxCollider(cocos2d::Rect boxRect, cocos2d::Node* parent)
+  :boxRect_(boxRect), parent_(parent)
 {
+  boxCollider_ = cocos2d::DrawNode::create(); //autorelease object
 
-  auto draw = DrawNode::create();
+  boxCollider_->retain();
 
-  draw->drawSolidRect(Vec2(0, 0), Vec2(gameObject->getCocosNode()->getContentSize().width, 50.0f), Color4F::RED);
-  draw->setOpacity(40);
-  gameLayer_->addChild(draw);
-  gameObject->getCocosNode()->addChild(draw);
+  boxCollider_->setContentSize(boxRect.size);
+  boxCollider_->drawSolidRect(boxRect.origin, boxRect.size, cocos2d::Color4F::RED);
+  boxCollider_->setOpacity(60);
+  parent->addChild(boxCollider_);
 
+  boxCollider_->setVisible(Globals::DebugDrawColliders);
 }
 
-
-BoxCollider::BoxCollider(cocos2d::Rect boxCollider, cocos2d::Node parent)
-{
-}
 
 BoxCollider::~BoxCollider()
 {
+  boxCollider_->removeFromParent();
+  boxCollider_->release();
 }
 
-void BoxCollider::setRectangle(cocos2d::Rect boxRect)
+
+void BoxCollider::setCollider(cocos2d::Rect boxRect, cocos2d::Node* parent)
 {
-  boxCollider_ = boxRect;
+  boxCollider_->removeFromParent();
+  boxCollider_->release();
+ 
+  boxRect_ = boxRect;
+  parent_ = parent;
+
+  boxCollider_ = cocos2d::DrawNode::create(); //autorelease object
+  boxCollider_->retain();
+
+  boxCollider_->setContentSize(boxRect.size);
+  boxCollider_->drawSolidRect(boxRect.origin, boxRect.size, cocos2d::Color4F::RED);
+
+  boxCollider_->setOpacity(60);
+  parent->addChild(boxCollider_);
+
+  boxCollider_->setVisible(Globals::DebugDrawColliders);  
 }
 
-cocos2d::Rect BoxCollider::getRectangle()
-{
-  return boxCollider_;
-}
 
 bool BoxCollider::intersectsCollider(ColliderComponent* otherCollider)
 {
-  bool isBoxCollider = ( typeid(otherCollider) == typeid(BoxCollider) );
+  //bool isBoxCollider = ( typeid(otherCollider) == typeid(BoxCollider) );
 
-  if (isBoxCollider) {
-    auto otherBoxCollider = static_cast<BoxCollider*>(otherCollider);
-    return boxCollider_.intersectsRect(otherBoxCollider->getRectangle() );
-  }
+  //if (isBoxCollider) {
+  //  auto otherBoxCollider = static_cast<BoxCollider*>(otherCollider);
+  //  return boxCollider_.intersectsRect(otherBoxCollider->getRectangle() );
+  //}
 
   return false;
 }
 
-BoxCollider* BoxCollider::clone()
+ColliderComponent* BoxCollider::clone(cocos2d::Node* parent)
 {
-  return new BoxCollider(boxCollider_);
+  BoxCollider* component;
+  component = new BoxCollider(boxRect_, parent);
+
+  return component;
 }

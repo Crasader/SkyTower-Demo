@@ -37,8 +37,9 @@ GameObject * GameObject::clone()
     graphic = graphic_->clone();
   }
 
-  if (collider_) {
-    collider = collider_->clone();
+  if (graphic_ && collider_) {
+    auto parent = graphic->getNode();
+    collider = collider_->clone(parent);
   }
 
   //create clone of GameObject

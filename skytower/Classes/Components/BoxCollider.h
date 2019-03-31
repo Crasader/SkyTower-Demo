@@ -1,21 +1,25 @@
 #pragma once
 #include "ColliderComponent.h"
+#include "Globals.h"
 #include "cocos2d.h"
 
 class BoxCollider : public ColliderComponent
 {
-public:
+private:
   BoxCollider();
-  BoxCollider(cocos2d::Rect boxCollider);
+
+public:
+  BoxCollider(cocos2d::Rect boxRect, cocos2d::Node* parent);
   virtual ~BoxCollider();
 
-  void          setRectangle(cocos2d::Rect boxRect);
-  cocos2d::Rect getRectangle();
+  void setCollider(cocos2d::Rect boxRect, cocos2d::Node* parent);
 
   virtual bool intersectsCollider(ColliderComponent* collider) override;
-  virtual BoxCollider* clone() override;
+  virtual ColliderComponent* clone(cocos2d::Node* parent) override;
 
 private:
-  cocos2d::Rect boxCollider_;
+  cocos2d::DrawNode* boxCollider_;
+  cocos2d::Rect      boxRect_;
+  cocos2d::Node*     parent_;
 };
 

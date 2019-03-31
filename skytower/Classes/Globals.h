@@ -16,7 +16,8 @@ public:
   static int random(int min, int max);
 
 public:
-  static bool DebugDrawColliders = true;
+  const static bool DebugDrawColliders;
+
   const static cocos2d::Size designResoluton;
   const static int framesPerSecond;
   const static int framesPerSecondFixedUpdate;
