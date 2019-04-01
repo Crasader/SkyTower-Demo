@@ -23,6 +23,11 @@ BoxCollider::~BoxCollider()
   boxCollider_->release();
 }
 
+cocos2d::Size BoxCollider::getSize()
+{
+  return boxCollider_->getContentSize();
+}
+
 
 void BoxCollider::setBoxCollider(cocos2d::Rect boxRect, cocos2d::Node* parent)
 {
@@ -52,17 +57,21 @@ cocos2d::DrawNode * BoxCollider::getBoxCollider()
 
 bool BoxCollider::intersectsCollider(std::shared_ptr<ColliderComponent> otherCollider)
 {
-  bool isBoxCollider = ( typeid(otherCollider) == typeid(BoxCollider) );
+  //bool isBoxCollider = ( typeid(otherCollider) == typeid(std::shared_ptr<BoxCollider>) );
 
-  if (isBoxCollider) {
-    auto otherBoxCollider = std::static_pointer_cast<BoxCollider>(otherCollider)->getBoxCollider();
+  //try cast ColliderComponent to BoxCollider
+  //if true, check Rectangle intersection
+  auto otherBoxCollider = std::static_pointer_cast<BoxCollider>(otherCollider);
 
-    auto objectOrigin = boxCollider_->getParent()->convertToWorldSpace(boxCollider_->getBoundingBox().origin);
-    auto objectSize = boxCollider_->getBoundingBox().size;
+  if (otherBoxCollider) {
+    auto otherBoxColliderNode = otherBoxCollider->getBoxCollider();
+
+    auto objectOrigin = getBoxCollider()->getParent()->convertToWorldSpace(boxCollider_->getBoundingBox().origin);
+    auto objectSize = getBoxCollider()->getBoundingBox().size;
     cocos2d::Rect objectRect = cocos2d::Rect(objectOrigin, objectSize);
 
-    auto otherObjectOrigin = otherBoxCollider->getParent()->convertToWorldSpace(otherBoxCollider->getBoundingBox().origin);
-    auto otherObjectSize = otherBoxCollider->getBoundingBox().size;
+    auto otherObjectOrigin = otherBoxColliderNode->getParent()->convertToWorldSpace(otherBoxColliderNode->getBoundingBox().origin);
+    auto otherObjectSize = otherBoxColliderNode->getBoundingBox().size;
     cocos2d::Rect otherObjectRect = cocos2d::Rect(otherObjectOrigin, otherObjectSize);
 
     bool intersects = objectRect.intersectsRect(otherObjectRect);

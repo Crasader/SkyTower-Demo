@@ -162,3 +162,11 @@ void GameObject::setChild(GameObject* gameObject)
     child_->getGraphic()->setParentNode(graphic_->getNode());
   }
 }
+
+void GameObject::stopMovement()
+{
+  if (physic_) {
+    setGravity(cocos2d::Vec2::ZERO);
+    setVelocity(cocos2d::Vec2::ZERO);
+  }
+}

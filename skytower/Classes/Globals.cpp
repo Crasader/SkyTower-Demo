@@ -30,6 +30,7 @@ const std::string Globals::fileNameElementTopBlue       { "elements_top-blue.png
 const std::string Globals::fileNameElementTopGreen      { "elements_top-green.png" };
 const std::string Globals::fileNameElementTopOrange     { "elements_top-orange.png" };
 const std::string Globals::fileNameElementWindow        { "elements_window.png" };
+const std::string Globals::fileNameElementHat           { "elements_hat.png" };
 
 const std::string Globals::fileNameScreenTitle      { "menu_screen-title.png" };
 const std::string Globals::fileNameScreenHighScores { "menu_screen-high-scores.png" };

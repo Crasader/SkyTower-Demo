@@ -42,6 +42,7 @@ public:
   const static std::string fileNameElementTopGreen;
   const static std::string fileNameElementTopOrange;
   const static std::string fileNameElementWindow;
+  const static std::string fileNameElementHat;
 
   const static std::string fileNameScreenTitle;
   const static std::string fileNameScreenHighScores;

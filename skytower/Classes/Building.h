@@ -20,7 +20,6 @@ private:
   virtual GameObject* clone() override;
 
 private:
-  cocos2d::Vec2   startPosition_;
   cocos2d::Vec2   currentPosition_;
   std::vector<std::shared_ptr<GameObject>> elements_;
 };

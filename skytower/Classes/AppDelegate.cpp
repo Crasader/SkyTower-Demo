@@ -182,35 +182,48 @@ void AppDelegate::initGlobalSprites()
   //Add game elements to spawner
   physic = new PhysicComponent(Globals::Gravity);
   graphic = new GraphicComponent(Globals::fileNameElementWindow);
-  graphic->setAnchorPoint(Vec2(0.5f, 0.0f));
+  cocos2d::Vec2 anchorBottomCenter{ Vec2(0.5f, 0.0f) };
+  graphic->setAnchorPoint(anchorBottomCenter);
   colliderRect = Rect( 0, 0, graphic->getNode()->getContentSize().width, 95.0f );
   collider = new BoxCollider(colliderRect, graphic->getNode());
   gameObject = new GameObject(graphic, physic, collider);
-  gameObject->setTag(ELEMENT);
+  gameObject->setTag(ELEMENT_FREE);
   Globals::spawner.addPrototype(gameObject, "element-window");
 
   gameObject = Globals::spawner.spawn("element-window"); //using "element-window" as prototype
   graphic = new GraphicComponent(Globals::fileNameElementBalconBlue);
+  graphic->setAnchorPoint(anchorBottomCenter);
   gameObject->setGraphic(graphic);
   Globals::spawner.addPrototype(gameObject, "element-balcon-Blue");
 
   gameObject = Globals::spawner.spawn("element-window"); //using "element-window" as prototype
   graphic = new GraphicComponent(Globals::fileNameElementBalconGreen);
+  graphic->setAnchorPoint(anchorBottomCenter);
   gameObject->setGraphic(graphic);
   Globals::spawner.addPrototype(gameObject, "element-balcon-green");
 
   gameObject = Globals::spawner.spawn("element-window"); //using "element-window" as prototype
   graphic = new GraphicComponent(Globals::fileNameElementBalconOrange);
+  graphic->setAnchorPoint(anchorBottomCenter);
   gameObject->setGraphic(graphic);
   Globals::spawner.addPrototype(gameObject, "element-balcon-orange");
 
-  ////
+  ////Add grass
   graphic = new GraphicComponent(Globals::fileNameElementStandGrass);
   colliderRect = Rect(0, 0, graphic->getNode()->getContentSize().width, 50.0f);
   collider = new BoxCollider(colliderRect, graphic->getNode());
-  graphic->setAnchorPoint(Vec2(0.5f, 0.0f));
+  graphic->setAnchorPoint(anchorBottomCenter);
   gameObject = new GameObject(graphic, nullptr, collider);
-  gameObject->setTag(ELEMENT);
+  gameObject->setTag(ELEMENT_FREE);
   Globals::spawner.addPrototype(gameObject, "element-grass");
+
+  //Add hat
+
+  ////
+  graphic = new GraphicComponent(Globals::fileNameElementHat);
+  graphic->setAnchorPoint(Vec2(0.5f, 1.0f));
+  gameObject = new GameObject(graphic);
+  gameObject->setTag(ROPE);
+  Globals::spawner.addPrototype(gameObject, "element-hat");
 
 }

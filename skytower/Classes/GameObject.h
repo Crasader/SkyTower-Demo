@@ -40,6 +40,8 @@ public:
   std::shared_ptr<GameObject>       getChild();
   void setChild(GameObject* gameObject);
 
+  void stopMovement();
+
   void setTag(int tag);
   int  getTag();
 

@@ -3,7 +3,7 @@
 
 
 Building::Building(cocos2d::Vec2 startPosition)
-  : startPosition_(startPosition), currentPosition_(startPosition)
+  : currentPosition_(startPosition)
 {
 }
 
@@ -26,8 +26,11 @@ void Building::addElement( std::shared_ptr<GameObject> gameObject )
   auto objectPosition = gameObject->getPosition();
   auto newPositon = cocos2d::Vec2(objectPosition.x, currentPosition_.y);
   gameObject->setPosition(newPositon);
-  float objectHeight = gameObject->getGraphic()->getNode()->getBoundingBox().size.height;
-  currentPosition_ += cocos2d::Vec2(0, objectHeight);
+
+  float objectHeight = gameObject->getCollider()->getSize().height;
+  currentPosition_.y += objectHeight;
+
+  gameObject->setTag(ELEMENT_BUILDING);
   elements_.push_back(gameObject);
 }
 

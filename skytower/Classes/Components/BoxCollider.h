@@ -12,6 +12,8 @@ public:
   BoxCollider(cocos2d::Rect boxRect, cocos2d::Node* parent);
   virtual ~BoxCollider();
 
+  virtual cocos2d::Size getSize();
+
   void               setBoxCollider(cocos2d::Rect boxRect, cocos2d::Node* parent);
   cocos2d::DrawNode* getBoxCollider();
 
