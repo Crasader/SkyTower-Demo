@@ -65,7 +65,8 @@ bool GameScene::init()
   std::vector<std::string> topElements{ Globals::elementTopBlue, Globals::elementTopGreen, Globals::elementTopOrange };
   std::vector<std::string> doorElements{ Globals::elementDoorBlue, Globals::elementDoorGreen, Globals::elementDoorOrange };
   
-  gameObject = Globals::spawner.spawn( doorElements[Globals::random(0, doorElements.size()-1)] ); // First drop element is door
+  // First drop element is door
+  gameObject = Globals::spawner.spawn( doorElements[Globals::random(0, doorElements.size()-1)] ); 
   rope_->addElement( std::shared_ptr<GameObject>(gameObject) );
  
   int elementType;
@@ -74,7 +75,9 @@ bool GameScene::init()
     gameObject = Globals::spawner.spawn(buildngElements[elementType]);
     rope_->addElement( std::shared_ptr<GameObject>(gameObject) );
   };
-  gameObject = Globals::spawner.spawn( topElements[Globals::random(0, topElements.size() - 1)] ); // Last drop element is top
+
+  // Last drop element is top
+  gameObject = Globals::spawner.spawn( topElements[Globals::random(0, topElements.size() - 1)] ); 
   rope_->addElement(std::shared_ptr<GameObject>(gameObject));
 
 
