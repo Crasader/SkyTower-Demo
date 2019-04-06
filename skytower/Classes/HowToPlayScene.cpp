@@ -29,7 +29,7 @@ bool HowToPlayScene::init()
 
 
   //Spawn Background
-  title_ = std::unique_ptr<GameObject>(Globals::spawner.spawn("howtoplay"));
+  title_ = std::unique_ptr<GameObject>(Globals::spawner.spawn(Globals::screenHowToPlay));
   title_->getGraphic()->setParentNode(this, BACKGROUND);
 
   //Add mouse event listener

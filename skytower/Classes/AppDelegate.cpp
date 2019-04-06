@@ -146,7 +146,7 @@ void AppDelegate::initGlobalSprites()
   GraphicComponent*  graphic;
   PhysicComponent*   physic;
   ColliderComponent* collider;
-  InputComponent*    input;
+  //InputComponent*    input;
   GameObject*        gameObject;
   cocos2d::Rect      colliderRect;
 
@@ -154,59 +154,110 @@ void AppDelegate::initGlobalSprites()
   graphic = new GraphicComponent(Globals::fileNameScreenTitle);
   graphic->setAnchorPoint(Vec2::ZERO);
   gameObject = new GameObject(graphic);
-  Globals::spawner.addPrototype(gameObject, "title");
+  Globals::spawner.addPrototype(gameObject, Globals::screenTitle);
 
   graphic = new GraphicComponent(Globals::fileNameScreenHowToPlay);
   graphic->setAnchorPoint(Vec2::ZERO);
   gameObject = new GameObject(graphic);
-  Globals::spawner.addPrototype(gameObject, "howtoplay");
+  Globals::spawner.addPrototype(gameObject, Globals::screenHowToPlay);
 
   graphic = new GraphicComponent(Globals::fileNameScreenHighScores);
   graphic->setAnchorPoint(Vec2::ZERO);
   gameObject = new GameObject(graphic);
-  Globals::spawner.addPrototype(gameObject, "highscores");
+  Globals::spawner.addPrototype(gameObject, Globals::screenHighScores);
 
 
   //Add backgrounds to spawner
   graphic = new GraphicComponent(Globals::fileNameBackSky);
   graphic->setAnchorPoint(Vec2::ZERO);
   gameObject = new GameObject(graphic);
-  Globals::spawner.addPrototype(gameObject, "backsky");
+  Globals::spawner.addPrototype(gameObject, Globals::backSky);
 
   graphic = new GraphicComponent(Globals::fileNameBackEarth);
   graphic->setAnchorPoint(Vec2::ZERO);
   gameObject = new GameObject(graphic);
-  Globals::spawner.addPrototype(gameObject, "backearth");
+  Globals::spawner.addPrototype(gameObject, Globals::backEarth);
 
 
   //Add game elements to spawner
+  float baseElementHeight = 95.0f;
+  float baseElementWidth;
+  float colliderWidthSubtracton = 10;
+  //Base Window
   physic = new PhysicComponent(Globals::Gravity);
   graphic = new GraphicComponent(Globals::fileNameElementWindow);
   cocos2d::Vec2 anchorBottomCenter{ Vec2(0.5f, 0.0f) };
   graphic->setAnchorPoint(anchorBottomCenter);
-  colliderRect = Rect( 0, 0, graphic->getNode()->getContentSize().width, 95.0f );
+  baseElementWidth = graphic->getNode()->getContentSize().width - colliderWidthSubtracton;
+  colliderRect = Rect( colliderWidthSubtracton / 2, 0, baseElementWidth, baseElementHeight );
   collider = new BoxCollider(colliderRect, graphic->getNode());
   gameObject = new GameObject(graphic, physic, collider);
   gameObject->setTag(ELEMENT_FREE);
-  Globals::spawner.addPrototype(gameObject, "element-window");
+  Globals::spawner.addPrototype(gameObject, Globals::elementWindow);
 
-  gameObject = Globals::spawner.spawn("element-window"); //using "element-window" as prototype
+  //Balcons
+  gameObject = Globals::spawner.spawn(Globals::elementWindow); //using "element-window" as prototype
   graphic = new GraphicComponent(Globals::fileNameElementBalconBlue);
   graphic->setAnchorPoint(anchorBottomCenter);
   gameObject->setGraphic(graphic);
-  Globals::spawner.addPrototype(gameObject, "element-balcon-Blue");
+  Globals::spawner.addPrototype(gameObject, Globals::elementBalconBlue);
 
-  gameObject = Globals::spawner.spawn("element-window"); //using "element-window" as prototype
+  gameObject = Globals::spawner.spawn(Globals::elementWindow); //using "element-window" as prototype
   graphic = new GraphicComponent(Globals::fileNameElementBalconGreen);
   graphic->setAnchorPoint(anchorBottomCenter);
   gameObject->setGraphic(graphic);
-  Globals::spawner.addPrototype(gameObject, "element-balcon-green");
+  Globals::spawner.addPrototype(gameObject, Globals::elementBalconGreen);
 
-  gameObject = Globals::spawner.spawn("element-window"); //using "element-window" as prototype
+  gameObject = Globals::spawner.spawn(Globals::elementWindow); //using "element-window" as prototype
   graphic = new GraphicComponent(Globals::fileNameElementBalconOrange);
   graphic->setAnchorPoint(anchorBottomCenter);
   gameObject->setGraphic(graphic);
-  Globals::spawner.addPrototype(gameObject, "element-balcon-orange");
+  Globals::spawner.addPrototype(gameObject, Globals::elementBalconOrange);
+
+  //Doors
+  gameObject = Globals::spawner.spawn(Globals::elementWindow); //using "element-window" as prototype
+  graphic = new GraphicComponent(Globals::fileNameElementDoorBlue);
+  graphic->setAnchorPoint(anchorBottomCenter);
+  gameObject->setGraphic(graphic);
+  Globals::spawner.addPrototype(gameObject, Globals::elementDoorBlue);
+
+  gameObject = Globals::spawner.spawn(Globals::elementWindow); //using "element-window" as prototype
+  graphic = new GraphicComponent(Globals::fileNameElementDoorGreen);
+  graphic->setAnchorPoint(anchorBottomCenter);
+  gameObject->setGraphic(graphic);
+  Globals::spawner.addPrototype(gameObject, Globals::elementDoorGreen);
+
+  gameObject = Globals::spawner.spawn(Globals::elementWindow); //using "element-window" as prototype
+  graphic = new GraphicComponent(Globals::fileNameElementDoorOrange);
+  graphic->setAnchorPoint(anchorBottomCenter);
+  gameObject->setGraphic(graphic);
+  Globals::spawner.addPrototype(gameObject, Globals::elementDoorOrange);
+
+  //Tops
+  gameObject = Globals::spawner.spawn(Globals::elementWindow); //using "element-window" as prototype
+
+  graphic = new GraphicComponent(Globals::fileNameElementTopBlue);
+  graphic->setAnchorPoint(anchorBottomCenter);
+  gameObject->setGraphic(graphic);
+
+  colliderRect = Rect((graphic->getNode()->getContentSize().width - baseElementWidth) / 2, 0, baseElementWidth, 95.0f); //create new collider for Tops
+  collider = new BoxCollider(colliderRect, graphic->getNode());
+  gameObject->setCollider(collider);
+  Globals::spawner.addPrototype(gameObject, Globals::elementTopBlue);
+
+  gameObject = Globals::spawner.spawn(Globals::elementTopBlue); //using "element-top-blue" as prototype
+  graphic = new GraphicComponent(Globals::fileNameElementTopGreen);
+  graphic->setAnchorPoint(anchorBottomCenter);
+  gameObject->setGraphic(graphic);
+  Globals::spawner.addPrototype(gameObject, Globals::elementTopGreen);
+
+  gameObject = Globals::spawner.spawn(Globals::elementTopBlue); //using "element-top-blue" as prototype
+  graphic = new GraphicComponent(Globals::fileNameElementTopOrange);
+  graphic->setAnchorPoint(anchorBottomCenter);
+  gameObject->setGraphic(graphic);
+  Globals::spawner.addPrototype(gameObject, Globals::elementTopOrange);
+
+
 
   ////Add grass
   graphic = new GraphicComponent(Globals::fileNameElementStandGrass);
@@ -215,7 +266,7 @@ void AppDelegate::initGlobalSprites()
   graphic->setAnchorPoint(anchorBottomCenter);
   gameObject = new GameObject(graphic, nullptr, collider);
   gameObject->setTag(ELEMENT_FREE);
-  Globals::spawner.addPrototype(gameObject, "element-grass");
+  Globals::spawner.addPrototype(gameObject, Globals::elementStandGrass);
 
   //Add hat
 
@@ -224,6 +275,6 @@ void AppDelegate::initGlobalSprites()
   graphic->setAnchorPoint(Vec2(0.5f, 1.0f));
   gameObject = new GameObject(graphic);
   gameObject->setTag(ROPE);
-  Globals::spawner.addPrototype(gameObject, "element-hat");
+  Globals::spawner.addPrototype(gameObject, Globals::elementHat);
 
 }

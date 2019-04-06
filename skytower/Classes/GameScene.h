@@ -20,10 +20,14 @@ public:
 
   void updateView();
 
+  void onMouseMove(cocos2d::Event* event);
   void onMouseDown(cocos2d::Event* event);
+  void onMouseUp(cocos2d::Event* event);
 
 private:
   cocos2d::Size    screenSize_;
+
+  InputState       inputState_;
 
   cocos2d::Node*   gameLayer_;
   cocos2d::Vec2    gameLayerPos_;

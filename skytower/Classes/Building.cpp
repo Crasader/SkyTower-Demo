@@ -24,10 +24,12 @@ void Building::fixedUpdate(float deltaTime)
 void Building::addElement( std::shared_ptr<GameObject> gameObject )
 {
   auto objectPosition = gameObject->getPosition();
-  auto newPositon = cocos2d::Vec2(objectPosition.x, currentPosition_.y);
+  auto collisionRectOrigin = gameObject->getCollider()->getOrigin();
+  auto collisionRectSize = gameObject->getCollider()->getSize();
+  auto newPositon = cocos2d::Vec2(objectPosition.x, currentPosition_.y - collisionRectOrigin.y);
   gameObject->setPosition(newPositon);
 
-  float objectHeight = gameObject->getCollider()->getSize().height;
+  float objectHeight = collisionRectSize.height - collisionRectOrigin.y;
   currentPosition_.y += objectHeight;
 
   gameObject->setTag(ELEMENT_BUILDING);

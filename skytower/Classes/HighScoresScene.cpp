@@ -29,7 +29,7 @@ bool HighScoresScene::init()
 
 
   //Spawn Background
-  title_ = std::unique_ptr<GameObject>(Globals::spawner.spawn("highscores"));
+  title_ = std::unique_ptr<GameObject>(Globals::spawner.spawn(Globals::screenHighScores));
   title_->getGraphic()->setParentNode(this, BACKGROUND);
 
   //Add mouse event listener

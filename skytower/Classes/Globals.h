@@ -24,6 +24,7 @@ public:
 
   const static cocos2d::Vec2 Gravity;
 
+  //File Names
   const static std::string fileNameSpriteSheet;
 
   const static std::string fileNameBackEarth;
@@ -54,7 +55,37 @@ public:
   const static std::string fileNameButtonResume;
   const static std::string fileNameButtonPause;
 
+  //Name of objects
+  const static std::string backEarth;
+  const static std::string backSky;
+  const static std::string backSpace;
+  const static std::string backSun;
 
+  const static std::string elementStandGrass;
+  const static std::string elementBalconBlue;
+  const static std::string elementBalconGreen;
+  const static std::string elementBalconOrange;
+  const static std::string elementDoorBlue;
+  const static std::string elementDoorGreen;
+  const static std::string elementDoorOrange;
+  const static std::string elementTopBlue;
+  const static std::string elementTopGreen;
+  const static std::string elementTopOrange;
+  const static std::string elementWindow;
+  const static std::string elementHat;
+
+  const static std::string screenTitle;
+  const static std::string screenHighScores;
+  const static std::string screenHowToPlay;
+
+  const static std::string buttonHighScores;
+  const static std::string buttonHowToPlay;
+  const static std::string buttonPlay;
+  const static std::string buttonResume;
+  const static std::string buttonPause;
+
+
+  //Spawner of objects
   static Spawner<GameObject> spawner;
 
 };

@@ -31,7 +31,7 @@ bool TitleScene::init()
 
 
   //Spawn Background
-  title_ = std::unique_ptr<GameObject>(Globals::spawner.spawn("title"));
+  title_ = std::unique_ptr<GameObject>(Globals::spawner.spawn(Globals::screenTitle));
   
   title_->getGraphic()->setParentNode(this, BACKGROUND);
 

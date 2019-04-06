@@ -8,8 +8,9 @@ BoxCollider::BoxCollider(cocos2d::Rect boxRect, cocos2d::Node* parent)
 
   boxCollider_->retain();
 
-  boxCollider_->setContentSize(boxRect.size);
-  boxCollider_->drawSolidRect(boxRect.origin, boxRect.size, cocos2d::Color4F::RED);
+  boxCollider_->setContentSize(boxRect_.size);
+
+  boxCollider_->drawSolidRect(boxRect_.origin, boxRect_.origin + boxRect_.size, cocos2d::Color4F::RED);
   boxCollider_->setOpacity(60);
   parent->addChild(boxCollider_);
 
@@ -23,9 +24,14 @@ BoxCollider::~BoxCollider()
   boxCollider_->release();
 }
 
+cocos2d::Vec2 BoxCollider::getOrigin()
+{
+  return boxRect_.origin;
+}
+
 cocos2d::Size BoxCollider::getSize()
 {
-  return boxCollider_->getContentSize();
+  return boxRect_.size;
 }
 
 
@@ -40,11 +46,14 @@ void BoxCollider::setBoxCollider(cocos2d::Rect boxRect, cocos2d::Node* parent)
   boxCollider_ = cocos2d::DrawNode::create(); //autorelease object
   boxCollider_->retain();
 
-  boxCollider_->setContentSize(boxRect.size);
-  boxCollider_->drawSolidRect(boxRect.origin, boxRect.size, cocos2d::Color4F::RED);
+  boxCollider_->setContentSize(boxRect_.size);
+  cocos2d::Vec2 boxRectDest;
+  boxRectDest.x = boxRect_.origin.x + boxRect_.size.width;
+  boxRectDest.y = boxRect_.origin.y + boxRect_.size.height;
+  boxCollider_->drawSolidRect(boxRect_.origin, boxRectDest, cocos2d::Color4F::RED);
 
   boxCollider_->setOpacity(60);
-  parent->addChild(boxCollider_);
+  parent_->addChild(boxCollider_);
 
   boxCollider_->setVisible(Globals::DebugDrawColliders);  
 }
@@ -54,27 +63,40 @@ cocos2d::DrawNode * BoxCollider::getBoxCollider()
   return boxCollider_;
 }
 
+cocos2d::Rect BoxCollider::getBoxRect()
+{
+  return boxRect_;
+}
+
 
 bool BoxCollider::intersectsCollider(std::shared_ptr<ColliderComponent> otherCollider)
 {
-  //bool isBoxCollider = ( typeid(otherCollider) == typeid(std::shared_ptr<BoxCollider>) );
-
   //try cast ColliderComponent to BoxCollider
   //if true, check Rectangle intersection
   auto otherBoxCollider = std::static_pointer_cast<BoxCollider>(otherCollider);
 
   if (otherBoxCollider) {
-    auto otherBoxColliderNode = otherBoxCollider->getBoxCollider();
 
-    auto objectOrigin = getBoxCollider()->getParent()->convertToWorldSpace(boxCollider_->getBoundingBox().origin);
-    auto objectSize = getBoxCollider()->getBoundingBox().size;
+    auto objectOrigin = getBoxCollider()->getParent()->convertToWorldSpace(this->getOrigin());
+    auto objectSize = this->getSize();
     cocos2d::Rect objectRect = cocos2d::Rect(objectOrigin, objectSize);
 
-    auto otherObjectOrigin = otherBoxColliderNode->getParent()->convertToWorldSpace(otherBoxColliderNode->getBoundingBox().origin);
-    auto otherObjectSize = otherBoxColliderNode->getBoundingBox().size;
+    auto otherBoxColliderNode = otherBoxCollider->getBoxCollider();
+    auto otherObjectOrigin = otherBoxColliderNode->getParent()->convertToWorldSpace(otherBoxCollider->getOrigin());
+    auto otherObjectSize = otherBoxCollider->getSize();
     cocos2d::Rect otherObjectRect = cocos2d::Rect(otherObjectOrigin, otherObjectSize);
 
     bool intersects = objectRect.intersectsRect(otherObjectRect);
+    
+    //debug draw collisions
+    /*if (intersects) {
+      auto drawnode = cocos2d::DrawNode::create(); //autorelease object
+
+      drawnode->drawSolidRect(objectRect.origin, objectRect.origin + objectRect.size, cocos2d::Color4F::RED);
+      drawnode->drawSolidRect(otherObjectRect.origin, otherObjectRect.origin + otherObjectRect.size, cocos2d::Color4F::BLUE);
+      parent_->getParent()->addChild(drawnode, FOREGROUND);
+    }*/
+
     return intersects;
   }
 

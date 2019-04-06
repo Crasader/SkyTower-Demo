@@ -16,7 +16,6 @@ Scene* GameScene::createScene()
   auto scene = Scene::create();
   auto layer = GameScene::create();
 
-
   scene->addChild(layer);
   return scene;
 }
@@ -36,10 +35,10 @@ bool GameScene::init()
 
 
   //Spawn Background
-  backgroundSky_ = std::unique_ptr<GameObject>(Globals::spawner.spawn("backsky"));
+  backgroundSky_ = std::unique_ptr<GameObject>(Globals::spawner.spawn(Globals::backSky));
   backgroundSky_->getGraphic()->setParentNode(this, BACKGROUND);
 
-  backgroundEarth_ = std::unique_ptr<GameObject>(Globals::spawner.spawn("backearth"));
+  backgroundEarth_ = std::unique_ptr<GameObject>(Globals::spawner.spawn(Globals::backEarth));
   backgroundEarth_->getGraphic()->setParentNode(gameLayer_, BACKGROUND);
 
   //Create building base
@@ -47,59 +46,43 @@ bool GameScene::init()
   building_ = std::make_unique<Building>(initialPosition);
   building_->setTag(BUILDING);
   //Add stand with grass to building
-  gameObject = Globals::spawner.spawn("element-grass");
+  gameObject = Globals::spawner.spawn(Globals::elementStandGrass);
   gameObject->setPosition(Vec2(screenSize_.width / 2, 150));
   gameLayer_->addChild( gameObject->getCocosNode() );
   building_->addElement( std::shared_ptr<GameObject>(gameObject) );
   //objectsPool_.push_back(building_);
 
+  ////Create rope
+  auto input = new PlayerInputComponent(&inputState_);
+  rope_ = std::make_shared<Rope>(input, gameLayer_, &objectsPool_);
+  rope_->setPosition(Vec2(screenSize_.width / 2, screenSize_.height + 100.0f));
+  this->addChild(rope_->getCocosNode());
+  objectsPool_.push_back(rope_);
 
-
-  //Create rope
-  rope_ = std::make_shared<Rope>();
-  auto draw = DrawNode::create();
-  draw->drawSegment(Vec2(0, 0), Vec2(0, 200), 4.0f, Color4F::RED);
-  draw->setContentSize(Size(4, 200));
-  draw->setAnchorPoint(Vec2(0.5f, 1.0f));
-  this->addChild(draw);
-  rope_ = std::make_shared<Rope>();
-  auto graphic = new GraphicComponent(draw);
-  rope_->setGraphic(graphic);
-  rope_->setTag(ROPE);
-  rope_->setPosition(Vec2(screenSize_.width / 2, screenSize_.height + 20.0f));
-  rope_->setRotation(30.0f);
-  //add childBoject - hat (hook)
-  gameObject = Globals::spawner.spawn("element-hat");
-  rope_->setChild(gameObject);
-
-  //create rotate action
-  auto rotate = EaseInOut::create(RotateBy::create(3.0f, -60.0f), 2.0f);
-  auto rotateRev = EaseInOut::create(RotateBy::create(3.0f, 60.0f), 2.0f);
-  auto sequence = Sequence::create(rotate, rotateRev, nullptr);
-  auto rotating = RepeatForever::create(sequence);
-  auto move = MoveBy::create(2.0f, Vec2(0.0f, 20.0f));
-  auto moveSequence = Sequence::create(move, move->reverse(), nullptr);
-  auto moving = RepeatForever::create(moveSequence);
-  rope_->getCocosNode()->runAction(rotating);
-  rope_->getCocosNode()->runAction(moving);
-
+  //Add elements to rope queue
+  int numberOfElements = 10;
+  std::vector<std::string> buildngElements{ Globals::elementWindow, Globals::elementBalconBlue, Globals::elementBalconGreen, Globals::elementBalconOrange };
+  std::vector<std::string> topElements{ Globals::elementTopBlue, Globals::elementTopGreen, Globals::elementTopOrange };
+  std::vector<std::string> doorElements{ Globals::elementDoorBlue, Globals::elementDoorGreen, Globals::elementDoorOrange };
   
+  gameObject = Globals::spawner.spawn( doorElements[Globals::random(0, doorElements.size()-1)] ); // First drop element is door
+  rope_->addElement( std::shared_ptr<GameObject>(gameObject) );
+ 
+  int elementType;
+  for (int i = 0; i < numberOfElements; i++) {
+    elementType = Globals::random(0, buildngElements.size() - 1);
+    gameObject = Globals::spawner.spawn(buildngElements[elementType]);
+    rope_->addElement( std::shared_ptr<GameObject>(gameObject) );
+  };
+  gameObject = Globals::spawner.spawn( topElements[Globals::random(0, topElements.size() - 1)] ); // Last drop element is top
+  rope_->addElement(std::shared_ptr<GameObject>(gameObject));
 
 
-
-
-
-  //gameObject = Globals::spawner.spawn("element-balcon-Blue");
-  //gameObject->setPosition( Vec2(screenSize_.width / 2, screenSize_.height) );
-  //gameObject->setRotation(40.0f);
-  //gameLayer_->addChild( gameObject->getCocosNode() );
-  //objectsPool_.push_back(std::shared_ptr<GameObject>(gameObject));
-
-  
-
-
+  // Add mouse listeners
   auto touchListener = EventListenerMouse::create();
-  touchListener->onMouseUp = CC_CALLBACK_1(GameScene::onMouseDown, this);
+  touchListener->onMouseMove = CC_CALLBACK_1(GameScene::onMouseMove, this);
+  touchListener->onMouseDown = CC_CALLBACK_1(GameScene::onMouseDown, this);
+  touchListener->onMouseUp = CC_CALLBACK_1(GameScene::onMouseUp, this);
   _eventDispatcher->addEventListenerWithSceneGraphPriority(touchListener, this);
 
   this->scheduleUpdate();
@@ -109,6 +92,8 @@ bool GameScene::init()
 
 void GameScene::update(float deltaTime)
 {
+  //rope_->update(deltaTime);
+
   //Update or delete objects from pool
   for (auto p = objectsPool_.begin(); p != objectsPool_.end(); p++) {
 
@@ -177,16 +162,25 @@ void GameScene::updateView()
 
 }
 
+void GameScene::onMouseMove(cocos2d::Event * event)
+{
+  EventMouse* e = (EventMouse*)event;
+  cocos2d::Vec2 newMousePosition;
+  newMousePosition.x = e->getCursorX();
+  newMousePosition.y = e->getCursorY();
+  inputState_.setMousePosition(newMousePosition);
+}
+
 void GameScene::onMouseDown(cocos2d::Event * event)
 {
-  auto gameObject = Globals::spawner.spawn("element-balcon-Blue");
-
-  auto position = Vec2(screenSize_.width / 2 + Globals::random(-100, 100), screenSize_.height);
-  gameObject->setPosition(gameLayer_->convertToNodeSpace(position));
-
-  gameLayer_->addChild(gameObject->getCocosNode());
-  objectsPool_.push_back(std::shared_ptr<GameObject>(gameObject));
+  inputState_.setMouseDown(true);
 }
+
+void GameScene::onMouseUp(cocos2d::Event * event)
+{
+  inputState_.setMouseDown(false);
+}
+
 
 
 
