@@ -45,6 +45,10 @@ bool GameScene::init()
   //Create GameManager (MEdiator) object
   gameManager_ = std::make_shared<GameManager>();
 
+  //Create Score label;
+  score_ = std::make_shared<ScoreLabel>(gameManager_);
+  score_->setPosition( Vec2(25, screenSize_.height - score_->getCocosNode()->getBoundingBox().size.height + 25));
+  this->addChild(score_->getCocosNode());
 
   //Create building base
   auto initialPosition(Vec2(screenSize_.width / 2, 100));

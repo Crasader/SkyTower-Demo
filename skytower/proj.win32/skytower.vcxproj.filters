@@ -19,6 +19,9 @@
     <Filter Include="src\GameObjects">
       <UniqueIdentifier>{274e4f78-08ac-4184-a489-d205b8b580ca}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\Abstract">
+      <UniqueIdentifier>{20755b5a-ab6e-4267-8ed3-61757e14ad5b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -72,14 +75,17 @@
     <ClCompile Include="..\Classes\InputState.cpp">
       <Filter>src\Components</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\Mediator.cpp">
+    <ClCompile Include="..\Classes\GameManager.cpp">
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\Colleague.cpp">
-      <Filter>src</Filter>
+      <Filter>src\Abstract</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\GameManager.cpp">
-      <Filter>src</Filter>
+    <ClCompile Include="..\Classes\Mediator.cpp">
+      <Filter>src\Abstract</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ScoreLabel.cpp">
+      <Filter>src\GameObjects</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -140,14 +146,17 @@
     <ClInclude Include="..\Classes\InputState.h">
       <Filter>src\Components</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\Mediator.h">
+    <ClInclude Include="..\Classes\GameManager.h">
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\Colleague.h">
-      <Filter>src</Filter>
+      <Filter>src\Abstract</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\GameManager.h">
-      <Filter>src</Filter>
+    <ClInclude Include="..\Classes\Mediator.h">
+      <Filter>src\Abstract</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ScoreLabel.h">
+      <Filter>src\GameObjects</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

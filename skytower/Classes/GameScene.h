@@ -35,8 +35,9 @@ private:
   std::unique_ptr<GameObject>  backgroundSky_;
   std::unique_ptr<GameObject>  backgroundEarth_;
 
-  std::shared_ptr<Rope>rope_;
-  std::shared_ptr<Building>building_;
+  std::shared_ptr<ScoreLabel> score_;
+  std::shared_ptr<Rope>       rope_;
+  std::shared_ptr<Building>   building_;
   std::list<std::shared_ptr<GameObject>> objectsPool_;
 
   std::shared_ptr<GameManager> gameManager_;

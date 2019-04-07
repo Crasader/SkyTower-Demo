@@ -11,6 +11,11 @@ GameManager::~GameManager()
 {
 }
 
+void GameManager::setScore(std::shared_ptr<ScoreLabel> score)
+{
+  score_ = score;
+}
+
 void GameManager::setRope(std::shared_ptr<Rope> rope)
 {
   rope_ = rope;
@@ -32,5 +37,6 @@ void GameManager::send(NotifyState notify, int integer, Colleague * colleague)
   if (senderIsBuilding) {
     cocos2d::log("Building send something");
   }
+
 
 }

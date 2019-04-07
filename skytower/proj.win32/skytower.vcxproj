@@ -165,6 +165,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)\Resources\" /D /E /I /F /Y
     <ClCompile Include="..\Classes\InputState.cpp" />
     <ClCompile Include="..\Classes\Mediator.cpp" />
     <ClCompile Include="..\Classes\Rope.cpp" />
+    <ClCompile Include="..\Classes\ScoreLabel.cpp" />
     <ClCompile Include="..\Classes\TitleScene.cpp" />
     <ClCompile Include="..\Classes\Globals.cpp" />
     <ClCompile Include="main.cpp" />
@@ -188,6 +189,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)\Resources\" /D /E /I /F /Y
     <ClInclude Include="..\Classes\InputState.h" />
     <ClInclude Include="..\Classes\Mediator.h" />
     <ClInclude Include="..\Classes\Rope.h" />
+    <ClInclude Include="..\Classes\ScoreLabel.h" />
     <ClInclude Include="..\Classes\TitleScene.h" />
     <ClInclude Include="..\Classes\Globals.h" />
     <ClInclude Include="..\Classes\Spawner.h" />

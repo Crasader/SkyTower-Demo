@@ -21,5 +21,6 @@ enum {
 enum class NotifyState {
   EmptyQueue,
   EmptyQueueAndRope,
-  ElementAdded
+  ElementAdded,
+  AddScore
 };
