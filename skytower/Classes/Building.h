@@ -18,6 +18,7 @@ public:
   std::shared_ptr<GameObject> getTopElement();
 
   virtual void  notify(NotifyState notify, int integer, Colleague* sender) override;
+  virtual bool  intersectsCollider(std::shared_ptr<ColliderComponent> collider) override;
   
 private:
   virtual GameObject* clone() override;

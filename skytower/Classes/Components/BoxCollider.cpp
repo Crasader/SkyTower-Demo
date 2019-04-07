@@ -4,15 +4,18 @@
 BoxCollider::BoxCollider(cocos2d::Rect boxRect, cocos2d::Node* parent)
   :boxRect_(boxRect), parent_(parent)
 {
-  boxCollider_ = cocos2d::DrawNode::create(); //autorelease object
 
+  boxCollider_ = cocos2d::DrawNode::create(); //autorelease object
   boxCollider_->retain();
 
   boxCollider_->setContentSize(boxRect_.size);
+  cocos2d::Vec2 boxRectDest;
+  boxRectDest.x = boxRect_.origin.x + boxRect_.size.width;
+  boxRectDest.y = boxRect_.origin.y + boxRect_.size.height;
+  boxCollider_->drawSolidRect(boxRect_.origin, boxRectDest, cocos2d::Color4F::RED);
 
-  boxCollider_->drawSolidRect(boxRect_.origin, boxRect_.origin + boxRect_.size, cocos2d::Color4F::RED);
   boxCollider_->setOpacity(60);
-  parent->addChild(boxCollider_);
+  parent_->addChild(boxCollider_);
 
   boxCollider_->setVisible(Globals::DebugDrawColliders);
 }

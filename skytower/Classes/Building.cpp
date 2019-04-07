@@ -47,6 +47,14 @@ void Building::notify(NotifyState notify, int integer, Colleague* sender)
 {
 }
 
+bool Building::intersectsCollider(std::shared_ptr<ColliderComponent> collider)
+{
+  //Get Collider of top element
+  auto topObjectCollider = getTopElement()->getCollider();
+  bool intersects = topObjectCollider->intersectsCollider(collider);
+  return intersects;
+}
+
 GameObject * Building::clone()
 {
   return nullptr;

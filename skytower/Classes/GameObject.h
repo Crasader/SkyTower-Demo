@@ -58,12 +58,14 @@ public:
   void              setColor(cocos2d::Color3B color) { getGraphic()->setColor(color); };
   cocos2d::Color3B  getColor() { return getGraphic()->getColor(); };
   //Physic wrappers
-  void              setVelocity(cocos2d::Vec2 velocity) { getPhysic()->setVelocity(velocity); };
-  cocos2d::Vec2     getVelocity() { return getPhysic()->getVelocity(); };
-  void              setGravity(cocos2d::Vec2 gravity) { getPhysic()->setGravity(gravity); };
-  cocos2d::Vec2     getGravity() { return getPhysic()->getGravity(); };
-  void              setSpeed(float speed) { getPhysic()->setSpeed(speed); };
-  float             getSpeed() { return getPhysic()->getSpeed(); };
+  void          setVelocity(cocos2d::Vec2 velocity) { getPhysic()->setVelocity(velocity); };
+  cocos2d::Vec2 getVelocity() { return getPhysic()->getVelocity(); };
+  void          setGravity(cocos2d::Vec2 gravity) { getPhysic()->setGravity(gravity); };
+  cocos2d::Vec2 getGravity() { return getPhysic()->getGravity(); };
+  void          setSpeed(float speed) { getPhysic()->setSpeed(speed); };
+  float         getSpeed() { return getPhysic()->getSpeed(); };
+  //Collider wrappwers
+  virtual bool  intersectsCollider(std::shared_ptr<ColliderComponent> collider) { return getCollider()->intersectsCollider(collider); };
   ////WRAPPERS
 
 

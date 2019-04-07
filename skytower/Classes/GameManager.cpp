@@ -37,6 +37,8 @@ void GameManager::send(NotifyState notify, int integer, Colleague * colleague)
 
   bool senderIsBuilding = (colleague == (&*building_));
   if (senderIsBuilding) {
+
+    //Score is updating
     if (notify == NotifyState::AddScore) {
       score_->addScore(integer);
 
@@ -45,6 +47,7 @@ void GameManager::send(NotifyState notify, int integer, Colleague * colleague)
         auto gameObject = buildingObject->getTopElement();
         auto ghostPositon = gameObject->getPosition();
 
+        //Calculate position of Ghost Score
         auto locatedRightSide = ((Globals::screenSize.width / 2) - ghostPositon.x) > 0;
         if (locatedRightSide) {
           ghostPositon.x += gameObject->getCocosNode()->getBoundingBox().size.width;
