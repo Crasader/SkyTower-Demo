@@ -3,6 +3,7 @@
 #include <memory>
 #include "cocos2d.h"
 #include "GameObject.h"
+#include "GameManager.h"
 
 
 class Rope;
@@ -37,6 +38,8 @@ private:
   std::shared_ptr<Rope>rope_;
   std::shared_ptr<Building>building_;
   std::list<std::shared_ptr<GameObject>> objectsPool_;
+
+  std::shared_ptr<GameManager> gameManager_;
 
   //fixed update variables
   float fixedTimeCounter{ 0.0f };

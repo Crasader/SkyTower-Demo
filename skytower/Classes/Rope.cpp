@@ -4,8 +4,8 @@
 
 USING_NS_CC;
 
-Rope::Rope(InputComponent* input, cocos2d::Node* gameLayer, std::list<std::shared_ptr<GameObject>>* objectsPool)
-  :gameLayer_(gameLayer), pool_(objectsPool)
+Rope::Rope(InputComponent* input, cocos2d::Node* gameLayer, std::list<std::shared_ptr<GameObject>>* objectsPool, std::shared_ptr<Mediator> mediator)
+  :gameLayer_(gameLayer), pool_(objectsPool), Colleague(mediator)
 {
   //Create rope
   auto draw = DrawNode::create();
@@ -88,11 +88,15 @@ void Rope::setReadyState()
   ropeState_ = READY;
 }
 
+void Rope::notify(NotifyState notify, int integer)
+{
+}
+
 
 GameObject* Rope::clone()
 {
   auto input = getInput()->clone();
-  auto gameObject = new Rope(input, gameLayer_, pool_);
+  auto gameObject = new Rope(input, gameLayer_, pool_, mediator_);
   return gameObject;
 }
 
@@ -100,8 +104,12 @@ GameObject* Rope::clone()
 void Rope::update(float deltaTime)
 {
   // Check if we can attach new element to rope
-  bool queueIsNotEmpty = !queue_.empty();
-  bool ropeCanTakeNextElement = (queueIsNotEmpty && ropeState_ == EMPTY);
+  bool queueIsEmpty = queue_.empty();
+  //if (queueIsEmpty) {
+  //  send(NotifyState::EmptyQueue);
+  //}
+
+  bool ropeCanTakeNextElement = (!queueIsEmpty && ropeState_ == EMPTY);
   if (ropeCanTakeNextElement) {
     ropeState_ = RELOADING;
     //auto wait = Wati 
@@ -113,6 +121,13 @@ void Rope::update(float deltaTime)
 
     auto takeSequence = Sequence::create(moveUp, callAttachNext, moveDown, setReadyState, nullptr);
     getCocosNode()->runAction(takeSequence);
+  }
+
+  //If elements finished - send message about that
+  bool queueAndRopeAreEmpty = (queueIsEmpty && ropeState_ == EMPTY);
+  if (queueAndRopeAreEmpty)
+  {
+    send(NotifyState::EmptyQueueAndRope);
   }
 
   // Check if we can drop element

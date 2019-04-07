@@ -16,3 +16,10 @@ enum {
   ROPE,
   FLYINGTHING
 };
+
+
+enum class NotifyState {
+  EmptyQueue,
+  EmptyQueueAndRope,
+  ElementAdded
+};

@@ -1,17 +1,20 @@
 #pragma once
 #include <string>
-#include "Mediator.h"
+#include <memory>
+#include "Enums.h"
+
+class Mediator;
 
 class Colleague
 {
 public:
-  Colleague(Mediator* mediator);
+  Colleague(std::shared_ptr<Mediator> mediator);
   virtual ~Colleague();
 
-  virtual void send(std::string string, int integer);
-  virtual void notify(std::string, int integer) = 0;
+  virtual void send(NotifyState notify, int integer = 0);
+  virtual void notify(NotifyState notify, int integer) = 0;
 
 protected:
-  Mediator* mediator_;
+  std::shared_ptr<Mediator> mediator_;
 };
 

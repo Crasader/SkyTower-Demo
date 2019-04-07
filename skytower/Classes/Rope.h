@@ -1,10 +1,11 @@
 #pragma once
 #include "GameObject.h"
+#include "Colleague.h"
 #include "cocos2d.h"
 
 template<typename T> class Spawner;
 
-class Rope : public GameObject
+class Rope : public GameObject, public Colleague
 {
   enum RopeState {
     EMPTY,
@@ -14,7 +15,10 @@ class Rope : public GameObject
   };
 
 public:
-  Rope(InputComponent* inputState, cocos2d::Node* gameLayer, std::list<std::shared_ptr<GameObject>>* objectsPool);
+  Rope( InputComponent* inputState, 
+        cocos2d::Node* gameLayer, 
+        std::list<std::shared_ptr<GameObject>>* objectsPool, 
+        std::shared_ptr<Mediator> mediator );
   virtual ~Rope();
 
   GameObject*   clone();
@@ -27,6 +31,8 @@ private:
   std::shared_ptr<GameObject> detachElement();
   void                        attachNextElement();
   void                        setReadyState();
+
+  virtual void  notify(NotifyState notify, int integer);
 
 private:
   cocos2d::Node*        gameLayer_;

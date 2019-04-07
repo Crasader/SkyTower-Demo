@@ -2,8 +2,8 @@
 
 
 
-Building::Building(cocos2d::Vec2 startPosition)
-  : currentPosition_(startPosition)
+Building::Building(cocos2d::Vec2 startPosition, std::shared_ptr<Mediator> mediator)
+  : currentPosition_(startPosition), Colleague(mediator)
 {
 }
 
@@ -34,11 +34,17 @@ void Building::addElement( std::shared_ptr<GameObject> gameObject )
 
   gameObject->setTag(ELEMENT_BUILDING);
   elements_.push_back(gameObject);
+
+  send(NotifyState::ElementAdded);
 }
 
 std::shared_ptr<GameObject> Building::getTopElement()
 {
   return elements_.back();
+}
+
+void Building::notify(NotifyState notify, int integer)
+{
 }
 
 GameObject * Building::clone()

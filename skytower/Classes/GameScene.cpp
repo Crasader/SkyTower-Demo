@@ -5,6 +5,7 @@
 #include "Spawner.h"
 #include "Rope.h"
 #include "Building.h"
+#include "GameManager.h"
 #include <memory>
 #include <string>
 
@@ -41,9 +42,13 @@ bool GameScene::init()
   backgroundEarth_ = std::unique_ptr<GameObject>(Globals::spawner.spawn(Globals::backEarth));
   backgroundEarth_->getGraphic()->setParentNode(gameLayer_, BACKGROUND);
 
+  //Create GameManager (MEdiator) object
+  gameManager_ = std::make_shared<GameManager>();
+
+
   //Create building base
   auto initialPosition(Vec2(screenSize_.width / 2, 100));
-  building_ = std::make_unique<Building>(initialPosition);
+  building_ = std::make_unique<Building>(initialPosition, gameManager_);
   building_->setTag(BUILDING);
   //Add stand with grass to building
   gameObject = Globals::spawner.spawn(Globals::elementStandGrass);
@@ -54,7 +59,7 @@ bool GameScene::init()
 
   ////Create rope
   auto input = new PlayerInputComponent(&inputState_);
-  rope_ = std::make_shared<Rope>(input, gameLayer_, &objectsPool_);
+  rope_ = std::make_shared<Rope>(input, gameLayer_, &objectsPool_, gameManager_);
   rope_->setPosition(Vec2(screenSize_.width / 2, screenSize_.height + 100.0f));
   this->addChild(rope_->getCocosNode());
   objectsPool_.push_back(rope_);
@@ -80,6 +85,9 @@ bool GameScene::init()
   gameObject = Globals::spawner.spawn( topElements[Globals::random(0, topElements.size() - 1)] ); 
   rope_->addElement(std::shared_ptr<GameObject>(gameObject));
 
+
+  gameManager_->setRope(rope_);
+  gameManager_->setBuilding(building_);
 
   // Add mouse listeners
   auto touchListener = EventListenerMouse::create();

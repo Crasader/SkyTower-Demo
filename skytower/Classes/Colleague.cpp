@@ -1,13 +1,8 @@
 #include "Colleague.h"
+#include "Mediator.h"
 
 
-
-Colleague::Colleague()
-{
-}
-
-
-Colleague::Colleague(Mediator* mediator)
+Colleague::Colleague(std::shared_ptr<Mediator> mediator)
   : mediator_(mediator)
 {
 }
@@ -16,7 +11,7 @@ Colleague::~Colleague()
 {
 }
 
-void Colleague::send(std::string string, int integer)
+void Colleague::send(NotifyState notify, int integer)
 {
-  mediator_->send(string, integer, this);
+  mediator_->send(notify, integer, this);
 }
