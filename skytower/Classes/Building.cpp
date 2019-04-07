@@ -85,7 +85,27 @@ void Building::checkIntersectObject(std::shared_ptr<GameObject> object)
 
         object->stopMovement();
         this->addElement(object);
-        this->send(NotifyState::AddScore, 100);
+
+        //Compute Scores        
+        auto x1 = std::max(elementRect.origin.x, objectRect.origin.x);
+        auto x2 = std::min(elementRect.origin.x + elementRect.size.width, objectRect.origin.x + objectRect.size.width);
+        auto percent = (100 * (x2 - x1)) / objectRect.size.width;
+
+        int score;
+        if (percent >= 99) {
+          score = 500;
+        }
+        if (percent >= 90 && percent < 99) {
+          score = 250;
+        };
+        if (percent >= 70 && percent < 90) {
+          score = 100;
+        };
+        if (percent < 70) {
+          score = 50;
+        };
+
+        this->send(NotifyState::AddScore, score);
 
         //// Add squash action
         auto scale = ScaleBy::create(0.1f, 1.2f, 0.8f);
