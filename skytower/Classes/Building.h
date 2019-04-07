@@ -19,6 +19,8 @@ public:
 
   virtual void  notify(NotifyState notify, int integer, Colleague* sender) override;
   virtual bool  intersectsCollider(std::shared_ptr<ColliderComponent> collider) override;
+
+  void checkIntersectObject(std::shared_ptr<GameObject> object);
   
 private:
   virtual GameObject* clone() override;
