@@ -16,6 +16,8 @@ public:
   static int random(int min, int max);
 
 public:
+  static cocos2d::Size  screenSize;
+
   const static bool DebugDrawColliders;
 
   const static cocos2d::Size designResoluton;

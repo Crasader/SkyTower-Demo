@@ -43,7 +43,7 @@ std::shared_ptr<GameObject> Building::getTopElement()
   return elements_.back();
 }
 
-void Building::notify(NotifyState notify, int integer)
+void Building::notify(NotifyState notify, int integer, Colleague* sender)
 {
 }
 

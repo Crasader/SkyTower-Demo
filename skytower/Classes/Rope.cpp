@@ -88,7 +88,7 @@ void Rope::setReadyState()
   ropeState_ = READY;
 }
 
-void Rope::notify(NotifyState notify, int integer)
+void Rope::notify(NotifyState notify, int integer, Colleague* sender)
 {
 }
 

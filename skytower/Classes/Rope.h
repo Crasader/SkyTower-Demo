@@ -32,7 +32,7 @@ private:
   void                        attachNextElement();
   void                        setReadyState();
 
-  virtual void  notify(NotifyState notify, int integer);
+  virtual void  notify(NotifyState notify, int integer, Colleague* sender) override;
 
 private:
   cocos2d::Node*        gameLayer_;

@@ -10,12 +10,16 @@ public:
   virtual ~ScoreLabel();
 
   virtual ScoreLabel* clone() override;
+  virtual void notify(NotifyState notify, int integer, Colleague* sender) override;
 
-  virtual void notify(NotifyState notify, int integer);
-
-  void spawnGhostLabel(cocos2d::Vec2 position, int score);
+  void addScore(int score);
+  void setScore(int score);
+  int  getScore();
+  void spawnGhostLabel(cocos2d::Node* layer, cocos2d::Vec2 position, int score);
 
 private:
+  void updateLabel();
+
   int              score_{ 0 };
   cocos2d::Label*  label_;
 };

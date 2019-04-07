@@ -1,4 +1,5 @@
 #include "GameManager.h"
+#include "Globals.h"
 #include "cocos2d.h"
 
 
@@ -28,6 +29,7 @@ void GameManager::setBuilding(std::shared_ptr<Building> building)
 
 void GameManager::send(NotifyState notify, int integer, Colleague * colleague)
 {
+
   bool senderIsRope = (colleague == (&*rope_));
   if (senderIsRope) {
     cocos2d::log("Rope send something");
@@ -35,8 +37,27 @@ void GameManager::send(NotifyState notify, int integer, Colleague * colleague)
 
   bool senderIsBuilding = (colleague == (&*building_));
   if (senderIsBuilding) {
-    cocos2d::log("Building send something");
-  }
+    if (notify == NotifyState::AddScore) {
+      score_->addScore(integer);
 
+      auto buildingObject = dynamic_cast<Building*>(colleague);
+      if (buildingObject) {
+        auto gameObject = buildingObject->getTopElement();
+        auto ghostPositon = gameObject->getPosition();
+
+        auto locatedRightSide = ((Globals::screenSize.width / 2) - ghostPositon.x) > 0;
+        if (locatedRightSide) {
+          ghostPositon.x += gameObject->getCocosNode()->getBoundingBox().size.width;
+        }
+        else {
+          ghostPositon.x -= gameObject->getCocosNode()->getBoundingBox().size.width;
+        }
+        auto spawnLayer = gameObject->getCocosNode()->getParent();
+        score_->spawnGhostLabel(spawnLayer, ghostPositon, integer);
+      }
+
+    }
+
+  }
 
 }

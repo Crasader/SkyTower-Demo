@@ -26,8 +26,6 @@ public:
   void onMouseUp(cocos2d::Event* event);
 
 private:
-  cocos2d::Size    screenSize_;
-
   InputState       inputState_;
 
   cocos2d::Node*   gameLayer_;

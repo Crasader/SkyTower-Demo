@@ -17,7 +17,7 @@ public:
   void                        addElement( std::shared_ptr<GameObject> gameObject );
   std::shared_ptr<GameObject> getTopElement();
 
-  virtual void  notify(NotifyState notify, int integer);
+  virtual void  notify(NotifyState notify, int integer, Colleague* sender) override;
   
 private:
   virtual GameObject* clone() override;

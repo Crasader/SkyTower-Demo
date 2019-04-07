@@ -5,6 +5,8 @@ USING_NS_CC;
 
 const bool Globals::DebugDrawColliders{ true };
 
+cocos2d::Size Globals::screenSize;
+
 const Size Globals::designResoluton = Size(640, 960);
 const int Globals::framesPerSecond = 60;
 const int Globals::framesPerSecondFixedUpdate = 30;

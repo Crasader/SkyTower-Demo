@@ -29,7 +29,7 @@ bool GameScene::init()
 
   GameObject* gameObject;
 
-  screenSize_ = Director::getInstance()->getWinSize();
+  Globals::screenSize = Director::getInstance()->getWinSize();
 
   gameLayer_ = Node::create();
   this->addChild(gameLayer_);
@@ -47,16 +47,16 @@ bool GameScene::init()
 
   //Create Score label;
   score_ = std::make_shared<ScoreLabel>(gameManager_);
-  score_->setPosition( Vec2(25, screenSize_.height - score_->getCocosNode()->getBoundingBox().size.height + 25));
+  score_->setPosition( Vec2(100, Globals::screenSize.height - score_->getCocosNode()->getBoundingBox().size.height));
   this->addChild(score_->getCocosNode());
 
   //Create building base
-  auto initialPosition(Vec2(screenSize_.width / 2, 100));
+  auto initialPosition(Vec2(Globals::screenSize.width / 2, 100));
   building_ = std::make_unique<Building>(initialPosition, gameManager_);
   building_->setTag(BUILDING);
   //Add stand with grass to building
   gameObject = Globals::spawner.spawn(Globals::elementStandGrass);
-  gameObject->setPosition(Vec2(screenSize_.width / 2, 150));
+  gameObject->setPosition(Vec2(Globals::screenSize.width / 2, 150));
   gameLayer_->addChild( gameObject->getCocosNode() );
   building_->addElement( std::shared_ptr<GameObject>(gameObject) );
   //objectsPool_.push_back(building_);
@@ -64,7 +64,7 @@ bool GameScene::init()
   ////Create rope
   auto input = new PlayerInputComponent(&inputState_);
   rope_ = std::make_shared<Rope>(input, gameLayer_, &objectsPool_, gameManager_);
-  rope_->setPosition(Vec2(screenSize_.width / 2, screenSize_.height + 100.0f));
+  rope_->setPosition(Vec2(Globals::screenSize.width / 2, Globals::screenSize.height + 100.0f));
   this->addChild(rope_->getCocosNode());
   objectsPool_.push_back(rope_);
 
@@ -89,7 +89,8 @@ bool GameScene::init()
   gameObject = Globals::spawner.spawn( topElements[Globals::random(0, topElements.size() - 1)] ); 
   rope_->addElement(std::shared_ptr<GameObject>(gameObject));
 
-
+  //Add objects to Game Manager
+  gameManager_->setScore(score_);
   gameManager_->setRope(rope_);
   gameManager_->setBuilding(building_);
 
@@ -151,6 +152,7 @@ void GameScene::fixedUpdate(float deltaTime)
       if (intesectBuildingAndElement) {
         object->stopMovement();
         building_->addElement(object);
+        building_->send(NotifyState::AddScore, 100);
 
         //// Add squash action
         auto scale = ScaleBy::create(0.1f, 1.2f, 0.8f);
@@ -170,7 +172,7 @@ void GameScene::updateView()
 {
   auto elementPosition = building_->getTopElement()->getPosition();
 
-  if ((elementPosition.y + gameLayerPos_.y) > (screenSize_.height / 3)) {
+  if ((elementPosition.y + gameLayerPos_.y) > (Globals::screenSize.height / 3)) {
     gameLayerPos_.y -= 5;
     gameLayer_->setPosition(gameLayerPos_);
   }
