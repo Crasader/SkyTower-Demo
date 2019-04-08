@@ -11,8 +11,8 @@ public:
   Building(cocos2d::Vec2 startPosition, std::shared_ptr<Mediator> mediator);
   virtual ~Building();
 
-  virtual void  update(float deltaTIme) override;
-  virtual void  fixedUpdate(float deltaTime) override;
+  //virtual void  update(float deltaTIme) override;
+  //virtual void  fixedUpdate(float deltaTime) override;
 
   void                        addElement( std::shared_ptr<GameObject> gameObject );
   std::shared_ptr<GameObject> getTopElement();
@@ -21,6 +21,9 @@ public:
   virtual bool  intersectsCollider(std::shared_ptr<ColliderComponent> collider) override;
 
   void checkIntersectObject(std::shared_ptr<GameObject> object);
+
+  float computeBalance();
+  void setStagger(float balance);
   
 private:
   virtual GameObject* clone() override;
@@ -28,4 +31,9 @@ private:
 private:
   cocos2d::Vec2   currentPosition_;
   std::vector<std::shared_ptr<GameObject>> elements_;
+
+  //float staggerDirection_{ 1.0f };
+  float staggerValue_{ 0.0f };
+  float staggerDuration_ {1.5f};
+  //float staggerTimeRemains_{ 0 };
 };

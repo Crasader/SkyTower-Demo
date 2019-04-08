@@ -13,13 +13,7 @@ Building::~Building()
 {
 }
 
-void Building::update(float deltaTIme)
-{
-}
 
-void Building::fixedUpdate(float deltaTime)
-{
-}
 
 
 void Building::addElement( std::shared_ptr<GameObject> gameObject )
@@ -133,6 +127,88 @@ void Building::checkIntersectObject(std::shared_ptr<GameObject> object)
     }
   }
 
+
+}
+
+float Building::computeBalance()
+{
+  auto i = elements_.begin();
+  i++;
+
+  //Get first (Base) element (after grass)
+  auto elementBoxCollider = std::static_pointer_cast<BoxCollider>( (*i)->getCollider() );
+  auto elementBoxColliderNode = elementBoxCollider->getBoxCollider();
+  auto elementOrigin = elementBoxColliderNode->getParent()->convertToWorldSpace(elementBoxCollider->getOrigin());
+  auto elementSize = elementBoxCollider->getSize();
+  auto elementMiddle = elementOrigin.x + elementSize.width / 2;
+
+  auto baseMinX = elementOrigin.x;
+  auto baseMaxX = elementOrigin.x + elementSize.width;
+
+  auto buildingMinX = baseMinX;
+  auto buildingMaxX = baseMaxX;
+
+  float tempMinX, tempMaxX;
+
+  //Compute mixX and maxX
+  i++;
+  for (; i != elements_.end(); i++) {
+    //Get next element
+    elementBoxCollider = std::static_pointer_cast<BoxCollider>((*i)->getCollider());
+    elementBoxColliderNode = elementBoxCollider->getBoxCollider();
+    elementOrigin = elementBoxColliderNode->getParent()->convertToWorldSpace(elementBoxCollider->getOrigin());
+    elementSize = elementBoxCollider->getSize();
+
+    tempMinX = elementOrigin.x;
+    tempMaxX = elementOrigin.x + elementSize.width;
+
+    if (tempMinX < buildingMinX) {
+      buildingMinX = tempMinX;
+    }
+
+    if (tempMaxX > buildingMaxX)
+    {
+      buildingMaxX = tempMaxX;
+    }
+  };
+
+
+  auto buildingMiddle = buildingMinX + (buildingMaxX - buildingMinX) / 2;
+
+  auto distanceFromMidPoints = buildingMiddle - elementMiddle;
+  auto balance = (distanceFromMidPoints / 50) * elements_.size();
+  return balance;
+}
+
+void Building::setStagger(float balance)
+{
+  staggerValue_ = balance; 
+
+  auto size = elements_.size();
+
+  if (size > 2) {
+    float index = 0;
+    float interval = balance / size;
+
+    
+    MoveBy* move = MoveBy::create(staggerDuration_, Vec2(index, 0));
+    MoveBy* moveRev = MoveBy::create(staggerDuration_, Vec2(-index, 0));
+    EaseInOut* ease = EaseInOut::create(move, 2.0f);
+    EaseInOut* easeRev = EaseInOut::create(moveRev, 2.0f);
+    RepeatForever* action = RepeatForever::create(Sequence::create(ease, easeRev, nullptr));
+
+    for (auto i = elements_.begin(); i != elements_.end(); i++) {
+      move = MoveBy::create(staggerDuration_, Vec2(index, 0));
+      moveRev = MoveBy::create(staggerDuration_, Vec2(-index, 0));
+      ease = EaseInOut::create(move, 2.0f);
+      easeRev = EaseInOut::create(moveRev, 2.0f);
+      action = RepeatForever::create(Sequence::create(ease, easeRev, nullptr));
+      (*i)->getCocosNode()->stopAllActions();
+      (*i)->getCocosNode()->runAction(action);
+      index += interval;
+    }
+
+  }
 
 }
 

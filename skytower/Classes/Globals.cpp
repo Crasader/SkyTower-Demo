@@ -3,7 +3,7 @@
 
 USING_NS_CC;
 
-const bool Globals::DebugDrawColliders{ true };
+const bool Globals::DebugDrawColliders{ false };
 
 cocos2d::Size Globals::screenSize;
 

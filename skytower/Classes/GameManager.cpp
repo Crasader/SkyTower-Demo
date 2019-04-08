@@ -1,7 +1,9 @@
 #include "GameManager.h"
 #include "Globals.h"
+#include "GameOverScene.h"
 #include "cocos2d.h"
 
+USING_NS_CC;
 
 GameManager::GameManager()
 {
@@ -32,11 +34,22 @@ void GameManager::send(NotifyState notify, int integer, Colleague * colleague)
 
   bool senderIsRope = (colleague == (&*rope_));
   if (senderIsRope) {
-    cocos2d::log("Rope send something");
+    //Empty queue and rope - game over
+    if (notify == NotifyState::EmptyQueueAndRope) {
+      auto scene = GameOverScene::createScene();
+      auto transition = TransitionFade::create(0.5f, scene);
+      Director::getInstance()->replaceScene(transition);
+    };
   }
 
   bool senderIsBuilding = (colleague == (&*building_));
   if (senderIsBuilding) {
+
+    //Added new element
+    if (notify == NotifyState::ElementAdded) {
+      auto balance = building_->computeBalance();
+      building_->setStagger(balance);
+    }
 
     //Score is updating
     if (notify == NotifyState::AddScore) {

@@ -60,7 +60,7 @@ bool GameScene::init()
   gameObject->setPosition(Vec2(Globals::screenSize.width / 2, 150));
   gameLayer_->addChild( gameObject->getCocosNode() );
   building_->addElement( std::shared_ptr<GameObject>(gameObject) );
-  //objectsPool_.push_back(building_);
+  objectsPool_.push_back(building_);
 
   ////Create rope
   auto input = new PlayerInputComponent(&inputState_);
@@ -70,7 +70,7 @@ bool GameScene::init()
   objectsPool_.push_back(rope_);
 
   //Add elements to rope queue
-  int numberOfElements = 10;
+  int numberOfElements = 20;
   std::vector<std::string> buildngElements{ Globals::elementWindow, Globals::elementBalconBlue, Globals::elementBalconGreen, Globals::elementBalconOrange };
   std::vector<std::string> topElements{ Globals::elementTopBlue, Globals::elementTopGreen, Globals::elementTopOrange };
   std::vector<std::string> doorElements{ Globals::elementDoorBlue, Globals::elementDoorGreen, Globals::elementDoorOrange };
@@ -113,6 +113,18 @@ void GameScene::update(float deltaTime)
 
   //Update or delete objects from pool
   for (auto p = objectsPool_.begin(); p != objectsPool_.end(); p++) {
+
+    //if object below screen - destroy it
+    auto objectHasGraphicComponent = (*p)->getGraphic();
+    if (objectHasGraphicComponent) {
+
+      float belowZeroFallDistance = 200.0f;
+      bool objectYBelowZero = (*p)->getPosition().y + belowZeroFallDistance < 0;
+      if (objectYBelowZero) {
+        (*p)->isReadyToDie = true;
+      }
+    }
+
 
     if ((*p)->isReadyToDie) {
       p = objectsPool_.erase(p); // remove object from pool
